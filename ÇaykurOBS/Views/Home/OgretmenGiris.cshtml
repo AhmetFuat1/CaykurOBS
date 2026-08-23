@@ -1,0 +1,90 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation style Form </title>
+    <link rel="stylesheet" href="~/css/StyleKodlar.css">
+</head>
+<body>
+    <div class="style">
+        <img src="~/ArkaPlanResimleri/EpostaveNumaraDogrulamaEkrani.jpg" alt="Çaykur Arka Plan" class="style__img">
+
+        <form action="/Home/GirisYap" class="style__form" method="post">
+            <h1 class="style__title">ÇAYKUR ÖĞRETMEN BİLGİ SİSTEMİ</h1>
+
+            @if (ViewBag.HataMesaji != null)
+            {
+                <div class="style__viewbag">
+                    @ViewBag.HataMesaji
+                </div>
+            }
+
+            <div class="style__content">
+                <div class="style__box">
+                    <i class="bx bx-lock-alt"></i>
+
+                    <div class="style__box-input">
+                        <input type="text" required class="style__input" name="OgrenciNumarasi" maxlength="9" placeholder="">
+                        <label for="" class="style__label">Akedemisyen Numarası</label>
+                    </div>
+                </div>
+
+                <div class="style__box">
+                    <i class="ri-lock-2-line style__icon"></i>
+
+
+                    <div class="style__box-input">
+                        <input type="password" required class="style__input" id="style-pas" name="Sifre" placeholder="">
+                        <label for="" class="style__label">Şifre</label>
+                        <i class="ri-eye-off-line style__eye"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="style__check">
+                <div class="style__check-group">
+                    <input type="checkbox" class="style__check-input" name="BeniHatirla" value="true">
+                    <label for="" class="style__check-label">Beni Hatırla</label>
+                </div>
+
+                <a href="/Home/login" class="style__forgot">Öğrenci Girişi İçin Tıklayınız</a>
+            </div>
+
+            <button type="submit" class="style__button">Giriş</button>
+
+       
+        </form>
+    </div>
+
+
+    <script>
+          const showHiddenPass = (stylePass, styleEye) =>{
+          const input = document.getElementById(stylePass),
+          iconEye = document.getElementById(styleEye)
+
+          iconEye.addEventListener('click', () =>{
+
+            if(input.type === 'password'){
+
+              input.type = 'text'
+
+              iconEye.classList.add('ri-eye-line')
+              iconEye.classList.remove('ri-eye-off-line')
+            } else{
+
+              input.type ='password'
+
+              iconEye.classList.remove('ri-eye-line')
+              iconEye.classList.add('ri-eye-off-line')
+
+            }
+          })
+        }
+
+        showHiddenPass('style-pass',' style-eye')</script>
+</body>
+</html>

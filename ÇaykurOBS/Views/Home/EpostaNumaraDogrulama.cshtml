@@ -1,0 +1,57 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eposta numara dogrulama ekrani </title>
+    <link rel="stylesheet" href="~/css/StyleKodlar.css">
+</head>
+<body>
+    <div class="style">
+        <img src="~/ArkaPlanResimleri/EpostaveNumaraDogrulamaEkrani.jpg" alt="Çaykur Arka Plan" class="style__img">
+
+        <form action="/Home/EpostaNumaraDogrulama" class="style__form" method="post">
+            <h1 class="style__title">Şifremi Unuttum</h1>
+
+            @if (ViewBag.HataMesaji != null)
+            {
+                <div class="style__viewbag">
+                    @ViewBag.HataMesaji
+                </div>
+            }
+
+            <div class="style__content">
+                <div class="style__box">
+                    <i class="bx bx-lock-alt"></i>
+
+                    <div class="style__box-input">
+                        <input type="text" required class="style__input" name="OgrenciNumarasi" maxlength="9" placeholder="">
+                        <label for="" class="style__label">Öğrenci Numarası</label>
+                    </div>
+                </div>
+
+                <div class="style__box">
+                    <i class="ri-lock-2-line style__icon"></i>
+
+
+                    <div class="style__box-input">
+                        <input type="email" required class="style__input" id="style-pas" name="Email" placeholder="">
+                        <label for="" class="style__label">E-Mail</label>
+                        <i class="ri-eye-off-line style__eye"></i>
+                    </div>
+                </div>
+            </div>
+
+
+            <button type="submit"  class="style__button">Şifreyi Sıfırla</button>
+
+           
+        </form>
+    </div>
+
+
+</body>
+</html>

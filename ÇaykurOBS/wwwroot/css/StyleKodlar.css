@@ -1,0 +1,211 @@
+﻿:root {
+    --white-color: hsl(0,0%,100%);
+    --black-color: hsl(0, 0%, 0%);
+    --body-font: "Poppins", sans-serif;
+    --h1-font-size: 1.75rem;
+    --normal-font-size: 1rem;
+    --small-font-size: .813rem;
+    --font-medium: 500;
+       }
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+
+body,
+input,
+button {
+    font-size: var(--normal-font-size);
+    font-family: var(--body-font);
+       }
+
+body {
+    color: var(--white-color);
+     }
+
+input,
+button {
+    border: none;
+    outline: none;
+       }
+
+a {
+    text-decoration: none;
+  }
+
+img {
+    max-width: 100%;
+    height: auto;
+    }
+
+.style {
+    position: relative;
+    height: 100vh;
+    display: grid;
+    align-items: center;
+        }
+
+.style__img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: bottom right;
+            }
+
+.style__form {
+    position: relative;
+    background-color: hsla(0, 0%, 10%, 0.35);
+    border: 2px solid var(--white-color);
+    margin-inline: 1.5rem;
+    padding: 2.5rem 1.5rem;
+    border-radius: 1rem;
+    backdrop-filter: blur(8px);
+              }
+
+.style__title {
+    text-align: center;
+    font-size: var(--h1-font-size);
+    font-weight: var(--font-medium);
+    margin-bottom: 2rem;
+              }
+
+.style__content, .style__box {
+    display: grid;
+                             }
+
+.style__content {
+    row-gap: 1.75rem;
+    margin-bottom: 1.5rem;
+                }
+
+.style__box {
+    grid-template-columns: max-content 1fr;
+    align-items: center;
+    column-gap: 0.75rem;
+    border-bottom: 2px solid var(--white-color);
+            }
+
+.style__icon, .style__eye {
+    font-size: 1.25rem;
+                          }
+
+.style__input {
+    width: 100%;
+    padding-block: 0.8rem;
+    background: none;
+    color: var(--white-color);
+    position: relative;
+    z-index: 1;
+              }
+
+.style__box-input {
+    position: relative;
+                  }
+
+.style__label {
+    position: absolute;
+    left: 0;
+    top: 13px;
+    font-weight: var(--font-medium);
+    transition: top 0.3s, font-size 0.3s;
+               }
+
+.style__eye {
+    position: absolute;
+    right: 0;
+    top: 18px;
+    z-index: 10;
+    cursor: pointer;
+}
+
+.style__box:nth-child(2) input {
+    padding-right: 1.8rem;
+                               }
+
+.style__check, .style__check-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+                                   }
+
+.style__check {
+    margin-bottom: 1.5rem;
+              }
+
+.style__check-label, .style__forgot, .style__register {
+    font-size: var(--small-font-size);
+                                                      }
+
+.style__check-group {
+    column-gap: 0.5rem;
+                    }
+
+.style__check-input {
+    width: 16px;
+    height: 16px;
+                    }
+
+.style__forgot {
+    color: var(--white-color);
+               }
+
+    .style__forgot:hover {
+        text-decoration: underline;
+                         }
+
+.style__button {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: var(--white-color);
+    font-weight: var(--font-medium);
+    cursor: pointer;
+    margin-bottom: 2rem;
+               }
+
+.style__register {
+    text-align: center;
+                 }
+
+.style__register a {
+        color: var(--white-color);
+        font-weight: var(--font-medium);
+                   }
+
+.style__register a:hover {
+            text-decoration: underline;
+                         }
+
+.style__input:focus + .style__label, .style__input:not(:placeholder-shown) + .style__label {
+    top: -12px;
+    font-size: var(--small-font-size);
+                                                                                           }
+
+@media screen and (min-width: 576px) {
+    .style {
+        justify-content: center;
+                                      }
+
+    .style__form {
+        width: 432px;
+        padding: 4rem 3rem 3.5rem;
+        border-radius: 1.5rem;
+                 }
+
+    .style__title {
+        font-size: 2rem;
+                  }
+    .style__viewbag {
+        background-color: rgba(220, 53, 69, 0.2);
+        border: 1px solid red;
+        color: white;
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        text-align: center;
+    }
+}
+

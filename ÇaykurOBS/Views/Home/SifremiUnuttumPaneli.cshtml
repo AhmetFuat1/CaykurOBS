@@ -1,0 +1,88 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation style Form </title>
+    <link rel="stylesheet" href="~/css/StyleKodlar.css">
+</head>
+<body>
+    <div class="style">
+        <img src="~/ArkaPlanResimleri/sifresifirlamaEkraniFotosu.jpg" alt="Çaykur Arka Plan" class="style__img">
+
+        <form action="/Home/sifremiUnuttumPaneli" class="style__form" method="post">
+            <h1 class="style__title">Şifremi Unuttum</h1>
+
+            @if (ViewBag.HataMesaji != null)
+            {
+                <div class="style__viewbag">
+                    @ViewBag.HataMesaji
+                </div>
+            }
+
+            <div class="style__content">
+
+                <div class="style__box">
+                    <i class="ri-lock-2-line style__icon"></i>
+
+
+                    <div class="style__box-input">
+                        <input type="password" required class="style__input" id="style-pas1" name="Sifre" placeholder=" ">
+                        <label for="" class="style__label">Şifre</label>
+                        <i class="ri-eye-off-line style__eye" id="style__eye1"></i>
+                    </div>
+                </div>
+                <div class="style__box">
+                    <i class="ri-lock-2-line style__icon"></i>
+
+
+                    <div class="style__box-input">
+                        <input type="password" required class="style__input" id="style-pas2" name="SifreTekrar" placeholder=" ">
+                        <label for="" class="style__label">Şifre Tekrar</label>
+                        <i class="ri-eye-off-line style__eye" id="style__eye2"></i>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="style__button">Şifreyi Sıfırla</button>
+
+           
+        </form>
+    </div>
+
+
+
+    <script>
+
+          const showHiddenPass = (stylePass, styleEye) =>{
+          const input = document.getElementById(stylePass),
+          iconEye = document.getElementById(styleEye)
+
+          iconEye.addEventListener('click', () =>{
+
+            if(input.type === 'password'){
+ 
+              input.type = 'text'
+
+              iconEye.classList.add('ri-eye-line')
+              iconEye.classList.remove('ri-eye-off-line')
+            } else{
+
+              input.type ='password'
+
+
+              iconEye.classList.remove('ri-eye-line')
+              iconEye.classList.add('ri-eye-off-line')
+
+            }
+          })
+        }
+
+        showHiddenPass('style-pass',' style-eye')</script>
+</body>
+</html>
+
+
