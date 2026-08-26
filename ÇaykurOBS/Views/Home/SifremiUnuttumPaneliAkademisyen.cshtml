@@ -13,7 +13,7 @@
     <div class="style">
         <img src="~/ArkaPlanResimleri/sifresifirlamaEkraniFotosu.jpg" alt="Çaykur Arka Plan" class="style__img">
 
-        <form action="/Home/sifremiUnuttumPaneli" class="style__form" method="post">
+        <form action="/Home/SifremiUnuttumPaneliAkademisyen" class="style__form" method="post">
             <h1 class="style__title">Şifremi Unuttum</h1>
 
             @if (ViewBag.HataMesaji != null)
@@ -27,14 +27,14 @@
 
                 <div class="style__box">
                     <div class="style__box-input">
-                        <input type="password" required class="style__input" name="Sifre" placeholder=" ">
+                        <input type="password" required class="style__input" name="AkademisyenSifre" placeholder=" ">
                         <label class="style__label">Şifre</label>
                     </div>
                 </div>
 
                 <div class="style__box">
                     <div class="style__box-input">
-                        <input type="password" required class="style__input" name="SifreTekrar" placeholder=" ">
+                        <input type="password" required class="style__input" name="AkademisyenSifreTekrar" placeholder=" ">
                         <label class="style__label">Şifre Tekrar</label>
                     </div>
                 </div>

@@ -1,32 +1,30 @@
-﻿@{
-    Layout = null;
-}
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
+
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AdminEkrani </title>
     <link rel="stylesheet" href="~/css/PanelKodlar.css">
 
 </head>
-<body>  
-   <!-- -----------Menuler------------ -->
-   <div class="container" >
-       <div class="navigation">
-           <ul>
-               <li>
-					<a href="#">
+<body>
+    <!-- -----------Menuler------------ -->
+    <div class="container">
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a href="#">
                         <span class="icon">
                             <ion-icon name="person-circle-outline"></ion-icon>
-                       </span>
+                        </span>
                         <span class="title">Admin Paneli</span>
                     </a>
-               </li>
+                </li>
 
                 <li>
-                    <a href="~/Home/AkedemisyenTablosu">
+                    <a href="~/Home/AkademisyenTablosu">
                         <span class="icon">
                             <ion-icon name="people-outline"></ion-icon>
                         </span>
@@ -42,7 +40,7 @@
                         <span class="title">Öğrenci Listesi</span>
                     </a>
                 </li>
-                
+
                 <li>
                     <a href="~/Home/AkademisyenKayit">
                         <span class="icon">
@@ -85,10 +83,14 @@
                         <span class="title">Oturumu Kapat</span>
                     </a>
                 </li>
-           </ul>
-       </div>
-   </div>
-   <!-- ionicons kullandım burda ikon çekeceğim yeri tanıttım -->
+            </ul>
+        </div>
+
+                <div class="main">
+			        @RenderBody()
+			    </div>
+    </div>
+    <!-- ionicons kullandım burda ikon çekeceğim yeri tanıttım -->
     <script type="module" src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.js"></script>
 

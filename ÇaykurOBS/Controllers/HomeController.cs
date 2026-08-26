@@ -1,11 +1,6 @@
 using ÇaykurOBS.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using System.Diagnostics;
-using System.Drawing;
-using System.Reflection;
-using System.Text.RegularExpressions;
-
 
 namespace ÇaykurOBS.Controllers
 {
@@ -17,7 +12,14 @@ namespace ÇaykurOBS.Controllers
         {
             _logger = logger;
         }
-
+        public IActionResult EpostaNumaraDogrulamaAkademisyen()
+        {
+            return View();
+        }
+        public IActionResult EpostaNumaraDogrulama()
+        {
+            return View();
+        }
         public IActionResult Index()
         {
             return View();
@@ -30,14 +32,19 @@ namespace ÇaykurOBS.Controllers
         {
             return View();
         }
+        public IActionResult AkademisyenKayit()
+        {
+            return View();
+        }
         public IActionResult OgretmenGiris()
         {
             return View();
         }
+
         [HttpPost]
         public IActionResult KayitOl(Ogrenci YeniOgrenci)
         {
-            if (string.IsNullOrEmpty(YeniOgrenci.OgrenciNumarasi) || string.IsNullOrEmpty(YeniOgrenci.Isim) || string.IsNullOrEmpty(YeniOgrenci.Soyisim) || string.IsNullOrEmpty(YeniOgrenci.Email) || string.IsNullOrEmpty(YeniOgrenci.Sifre) || string.IsNullOrEmpty(YeniOgrenci.SifreTekrar))
+            if (string.IsNullOrEmpty(YeniOgrenci.OgrenciNumarasi) || string.IsNullOrEmpty(YeniOgrenci.Isim) || string.IsNullOrEmpty(YeniOgrenci.Soyisim))
             {
                 ViewBag.HataMesaji = "Lütfen tüm alanları doldurun.";
                 return View("Kayit");
@@ -47,26 +54,7 @@ namespace ÇaykurOBS.Controllers
                 ViewBag.HataMesaji = "Öğrenci numarası 9 haneli olmalıdır.";
                 return View("Kayit");
             }
-            else if (!long.TryParse(YeniOgrenci.OgrenciNumarasi, out _))
-            {
-                ViewBag.HataMesaji = "Öğrenci numarası sadece rakamlardan oluşmalıdır.";
-                return View("Kayit");
-            }
-            else if (YeniOgrenci.Sifre != YeniOgrenci.SifreTekrar)
-            {
-                ViewBag.HataMesaji = "Şifreler eşleşmiyor.";
-                return View("Kayit");
-            }
-            else if (YeniOgrenci.Sifre.Length < 6)
-            {
-                ViewBag.HataMesaji = "Şifre en az 6 karakter olmalıdır.";
-                return View("Kayit");
-            }
-            else if(!Regex.IsMatch(YeniOgrenci.Email, @"^[^\s@]+@[^\s@]+\.[^\s@]+$"))
-            {
-                ViewBag.HataMesaji = "Geçerli bir e-posta adresi girin.";
-                return View("Kayit");
-            }
+
             else if(!YeniOgrenci.Soyisim.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)) || !YeniOgrenci.Isim.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
             {
                 ViewBag.HataMesaji = "İsim ve soyisim sadece harflerden oluşmalıdır.";
@@ -74,8 +62,7 @@ namespace ÇaykurOBS.Controllers
             }
             else
             {
-                SorguKomutlari sorgu = new SorguKomutlari();
-                int sonuc = sorgu.OgrenciKayitEkle(YeniOgrenci);
+                int sonuc = SorguKomutlari.OgrenciKayitEkle(YeniOgrenci);
                 if (sonuc == 0)
                 {
                     ViewBag.HataMesaji = "Bu öğrenci numarası veya e-posta zaten kayıtlı.";
@@ -84,12 +71,52 @@ namespace ÇaykurOBS.Controllers
                 else
                 {
                     ViewBag.BasariliMesaji = "Kayıt başarılı!";
-                    return View("Login");
+                    return View("AdminPanel");
+                }
+            }
+        }
+
+        [HttpPost]
+        public IActionResult AkademisyenKayitOl(Akademisyen YeniAkademisyen)
+        {
+            if (string.IsNullOrEmpty(YeniAkademisyen.AkademisyenNumarasi) || string.IsNullOrEmpty(YeniAkademisyen.AkademisyenIsim) || string.IsNullOrEmpty(YeniAkademisyen.AkademisyenSoyisim))
+            {
+                ViewBag.HataMesaji = "Lütfen tüm alanları doldurun.";
+                return View("AkademisyenKayit");
+            }
+            else if (YeniAkademisyen.AkademisyenNumarasi.Length != 9)
+            {
+                ViewBag.HataMesaji = "Akademisyen numarası 9 haneli olmalıdır.";
+                return View("AkademisyenKayit");
+            }
+            else if (!long.TryParse(YeniAkademisyen.AkademisyenNumarasi, out _))
+            {
+                ViewBag.HataMesaji = "Akademisyen numarası sadece rakamlardan oluşmalıdır.";
+                return View("AkademisyenKayit");
+            }
+
+            else if (!YeniAkademisyen.AkademisyenSoyisim.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)) || !YeniAkademisyen.AkademisyenIsim.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
+            {
+                ViewBag.HataMesaji = "İsim ve soyisim sadece harflerden oluşmalıdır.";
+                return View("AkademisyenKayit");
+            }
+            else
+            {
+                int sonuc = SorguKomutlari.AkademisyenKayitEkle(YeniAkademisyen);
+                if (sonuc == 0)
+                {
+                    ViewBag.HataMesaji = "Bu akademisyen numarası veya e-posta zaten kayıtlı.";
+                    return View("AkademisyenKayit");
+                }
+                else
+                {
+                    ViewBag.BasariliMesaji = "Kayıt başarılı!";
+                    return View("AdminPanel");
                 }
             }
         }
         [HttpPost]
-        public IActionResult GirisYap(Giris YeniGiris)
+        public IActionResult GirisYap(OgrenciGiris YeniGiris)
         {
             string ogrenciNumarasi = YeniGiris.OgrenciNumarasi;
             string sifre = YeniGiris.Sifre;
@@ -101,8 +128,7 @@ namespace ÇaykurOBS.Controllers
             {
                 return View("AdminPanel");
             }
-            SorguKomutlari sorgu = new SorguKomutlari();
-            int sonuc = sorgu.OgrenciKayitKontrol(ogrenciNumarasi, sifre);
+            int sonuc = SorguKomutlari.OgrenciKayitKontrol(ogrenciNumarasi, sifre);
             if (sonuc == 0)
             {
                 ViewBag.HataMesaji = "Geçersiz öğrenci numarası veya şifre.";
@@ -111,47 +137,104 @@ namespace ÇaykurOBS.Controllers
             else
             {
                 HttpContext.Session.SetInt32("OgrenciId", sonuc);
-                if(sifre== "123456")
+                if (sifre == "123456")
                 {
-                    return View("SifremiUnuttumPaneli");
+                    return View("EpostaNumaraDogrulama");
                 }
-                return View("OgrenciPanel");       
+                return View("OgrenciPanel");
             }
         }
-        public IActionResult EpostaNumaraDogrulama()
+
+            [HttpPost]
+            public IActionResult AkademisyenGirisYap(AkademisyenGiris YeniGiris)
+            {
+                string akademisyenNumarasi = YeniGiris.AkademisyenNumarasi;
+                string sifre = YeniGiris.AkademisyenSifre;
+
+                string adminNumarasi = "123456789";
+                string adminSifre = "admin123";
+
+                if (akademisyenNumarasi == adminNumarasi && sifre == adminSifre)
+                {
+                    return View("AdminPanel");
+                }
+                int sonuc = SorguKomutlari.AkademisyenKayitKontrol(akademisyenNumarasi, sifre);
+                if (sonuc == 0)
+                {
+                    ViewBag.HataMesaji = "Geçersiz akademisyen numarası veya şifre.";
+                    return View("OgretmenGiris");
+                }
+                else
+                {
+                    HttpContext.Session.SetInt32("AkademisyenId", sonuc);
+                    if (sifre == "123456")
+                    {
+                        return View("EpostaNumaraDogrulamaAkademisyen");
+                    }
+                    return View("OgretmenPanel");
+                }
+            }
+
+        public IActionResult VarsayilanSifreOgrenci(int ID)
         {
-            return View();
+            List <Ogrenci> ogrenciler= SorguKomutlari.OgrenciGetir();
+            SorguKomutlari.VarsayilanSifre(ID);
+            return View("OgrenciTablosu", ogrenciler);
         }
-     /*   [HttpPost]
-       public IActionResult EpostaNumaraDogrulama(Giris YeniGiris)
+  
+        public IActionResult VarsayilanSifreAkademisyen(int ID)
+        {
+            List <Akademisyen> akademisyenler= SorguKomutlari.AkademisyenGetir();
+            SorguKomutlari.VarsayilanSifreAkademisyen(ID);
+            return View("AkademisyenTablosu", akademisyenler);
+        }
+      
+        public IActionResult OgrenciSilme(int ID)
+        {
+            List<Ogrenci> ogrenciler = SorguKomutlari.OgrenciGetir();
+            int sorgu= SorguKomutlari.OgrenciSilme(ID);
+            if (sorgu == 0)
+                return View("OgrenciTablosu", ogrenciler);
+            else
+                return View("OgrenciTablosu", ogrenciler);
+
+        }
+       
+        [HttpPost]
+       public IActionResult EpostaNumaraDogrulama(OgrenciGiris YeniGiris)
         {
             string ogrenciNumarasi = YeniGiris.OgrenciNumarasi;
             string email = YeniGiris.Email;
-            using (SqlConnection baglanti = new SqlConnection(baglantiAdresi))
+            int sonuc = SorguKomutlari.EpostaNumaraDogrulama(ogrenciNumarasi, email);
+            if (sonuc == 0)
             {
-                baglanti.Open();
-                string sqlVeriCekme = "SELECT OgrenciID FROM Ogrenciler WHERE Numara = @pNumara AND Eposta = @pEposta";
-                SqlCommand komut = new SqlCommand(sqlVeriCekme, baglanti);
-                {
-                    komut.Parameters.AddWithValue("@pNumara", ogrenciNumarasi);
-                    komut.Parameters.AddWithValue("@pEposta", email);
-                    object SıfırlamaId = komut.ExecuteScalar();
-
-                    if (SıfırlamaId != null)
-                    {
-                        int donusmusId = Convert.ToInt32(SıfırlamaId);
-                        HttpContext.Session.SetInt32("SifirlamaId", donusmusId);
-
-                        return View("SifremiUnuttumPaneli");
-                    }
-                    else
-                    {
-                        ViewBag.HataMesaji = "Geçersiz öğrenci numarası veya e-postası.";
-                        return View("EpostaNumaraDogrulama");
-                    }
-                }
+                ViewBag.HataMesaji = "Geçersiz öğrenci numarası veya e-posta.";
+                return View("EpostaNumaraDogrulama");
             }
-        }*/
+            else
+            {
+                HttpContext.Session.SetInt32("OgrenciId", sonuc);
+                return View("SifremiUnuttumPaneli");
+            }
+        }
+       
+        [HttpPost]
+        public IActionResult EpostaNumaraDogrulamaAkademisyen(AkademisyenGiris YeniGiris)
+        {
+            string akademisyenNumarasi = YeniGiris.AkademisyenNumarasi;
+            string email = YeniGiris.AkademisyenEmail;
+            int sonuc = SorguKomutlari.EpostaNumaraDogrulamaAkademisyen(akademisyenNumarasi, email);
+            if (sonuc == 0)
+            {
+                ViewBag.HataMesaji = "Geçersiz akademisyen numarası veya e-posta.";
+                return View("EpostaNumaraDogrulamaAkademisyen");
+            }
+            else
+            {
+                HttpContext.Session.SetInt32("AkademisyenId", sonuc);
+                return View("SifremiUnuttumPaneliAkademisyen");
+            }
+        }
 
         [HttpPost]
         public IActionResult SifremiUnuttumPaneli(Ogrenci YeniOgrenci)
@@ -175,10 +258,52 @@ namespace ÇaykurOBS.Controllers
             {
                string yeniSifre = YeniOgrenci.Sifre;
                int OgrenciId = HttpContext.Session.GetInt32("OgrenciId")??0;
-               SorguKomutlari sorgu = new SorguKomutlari();
-               sorgu.SifreSifirlama(OgrenciId, yeniSifre);
-                return View("Login");
+               SorguKomutlari.SifreSifirlama(OgrenciId, yeniSifre);
+               return View("Login");
             }
+        }
+        [HttpPost]
+        public IActionResult SifremiUnuttumPaneliAkademisyen(Akademisyen YeniAkademisyen)
+        {
+            if (YeniAkademisyen.AkademisyenSifre == null || YeniAkademisyen.AkademisyenSifreTekrar == null)
+            {
+                ViewBag.HataMesaji = "Lütfen tüm alanları doldurun.";
+                return View("SifremiUnuttumPaneliAkademisyen");
+            }
+            else if (YeniAkademisyen.AkademisyenSifre != YeniAkademisyen.AkademisyenSifreTekrar)
+            {
+                ViewBag.HataMesaji = "Şifreler eşleşmiyor.";
+                return View("SifremiUnuttumPaneliAkademisyen");
+            }
+            else if (YeniAkademisyen.AkademisyenSifre.Length < 6)
+            {
+                ViewBag.HataMesaji = "Şifre en az 6 karakter olmalıdır.";
+                return View("SifremiUnuttumPaneliAkademisyen");
+            }
+            else
+            {
+                string yeniSifre = YeniAkademisyen.AkademisyenSifre;
+                int AkademisyenId = HttpContext.Session.GetInt32("AkademisyenId") ?? 0;
+                SorguKomutlari.SifreSifirlamaAkademisyen(AkademisyenId, yeniSifre);
+                return View("OgretmenGiris");
+            }
+        }
+
+        public IActionResult OgrenciTablosu()
+        {
+            List<Ogrenci> ogrenciler = SorguKomutlari.OgrenciGetir();
+            return View(ogrenciler);
+        }
+
+        public IActionResult AkademisyenTablosu()
+        {
+            List<Akademisyen> akedemisyenler = SorguKomutlari.AkademisyenGetir();
+            return View(akedemisyenler);
+        }
+        public IActionResult CikisYap()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login", "Home"); 
         }
 
         public IActionResult Privacy()

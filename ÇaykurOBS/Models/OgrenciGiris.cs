@@ -1,6 +1,6 @@
 ﻿namespace ÇaykurOBS.Models
 {
-        public class Giris
+        public class OgrenciGiris
         {
             public string OgrenciNumarasi { get; set; }
             public string Sifre { get; set; }

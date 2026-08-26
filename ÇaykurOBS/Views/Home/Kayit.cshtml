@@ -1,20 +1,11 @@
 ﻿@{
-    Layout = null;
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animation style Form </title>
-    <link rel="stylesheet" href="~/css/StyleKodlar.css>" >
-</head>
-<body>
-    <div class="style">
-		<img src="~/ArkaPlanResimleri/EkraniFotosu.jpg" alt="Çaykur Arka Plan" class="style__img">
 
-        <form action="/Home/styleOl" class="style__form" method="post">
-            <h1 class="style__title">Kayıt Ol</h1>
+    <div class="style">
+
+        <form action="/Home/KayitOl" class="style__form" method="post">
+        <h1 class="style__title">Öğrenci Kayıt Ekranı</h1>
          
             @if (ViewBag.HataMesaji != null)
             {
@@ -28,7 +19,7 @@
 
                     <div class="style__box-input">
                         <input type="text" required class="style__input" name="OgrenciNumarasi" maxlength="9" placeholder=" ">
-                        <label for="" class="style__label">Öğrenci Numarası</label>
+                        <label class="style__label">Öğrenci Numarası</label>
                     </div>
                 </div>
                 <div class="style__box">
@@ -36,7 +27,7 @@
 
                     <div class="style__box-input">
                         <input type="text" required class="style__input" name="Isim" placeholder=" ">
-                        <label for="" class="style__label">İsim</label>
+                        <label class="style__label">İsim</label>
                     </div>
                 </div>
 
@@ -45,76 +36,15 @@
 
                     <div class="style__box-input">
                         <input type="text" required class="style__input" name="Soyisim" placeholder=" ">
-                        <label for="" class="style__label">Soyisim</label>
-                    </div>
-                </div>
-                <div class="style__box">
-                    <i class="bx bx-lock-alt"></i>
-
-                <div class="style__box-input">
-                    <input type="email" required class="style__input" name="Email" placeholder=" ">
-                    <label for="" class="style__label">Email</label>
-                </div>
-            </div>
-
-                <div class="style__box">
-                    <i class="ri-lock-2-line style__icon"></i>
-
-
-                    <div class="style__box-input">
-                        <input type="password" required class="style__input" id="style-pas1" name="Sifre" placeholder=" ">
-                        <label for="" class="style__label">Şifre</label>
-                        <i class="ri-eye-off-line style__eye" id="style__eye1"></i>
-                    </div>
-                </div>
-                <div class="style__box">
-                    <i class="ri-lock-2-line style__icon"></i>
-
-
-                    <div class="style__box-input">
-                        <input type="password" required class="style__input" id="style-pas2" name="SifreTekrar" placeholder=" ">
-                        <label for="" class="style__label">Şifre Tekrar</label>
-                        <i class="ri-eye-off-line style__eye" id="style__eye2"></i>
+                        <label class="style__label">Soyisim</label>
                     </div>
                 </div>
             </div>
 
-            <button type="submit" class="style__button">Kayıt Ol</button> 
+            <button type="submit" class="style__button">Kayıt Ekle</button> 
 
-            <p class="style__register">
-               Hesabınız var mı? <a href="/Home/Login">Giriş Yapmak için tıklayınız.</a></p> 
         </form>
     </div>
 
 
-
-    <script>
- 
-                const showHiddenPass = (stylePass, styleEye) =>{
-                const input = document.getElementById(stylePass),
-                iconEye = document.getElementById(styleEye)
-
-                iconEye.addEventListener('click', () =>{
-  
-                  if(input.type === 'password'){
-
-                    input.type = 'text'
-
-                    iconEye.classList.add('ri-eye-line')
-                    iconEye.classList.remove('ri-eye-off-line')
-                  } else{
-
-                    input.type ='password'
-
-
-                    iconEye.classList.remove('ri-eye-line')
-                    iconEye.classList.add('ri-eye-off-line')
-
-                  }
-                })
-              }
-
-              showHiddenPass('style-pass',' style-eye')</script>
-</body>
-</html>
 

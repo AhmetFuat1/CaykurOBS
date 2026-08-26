@@ -1,0 +1,50 @@
+﻿@{
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<div class="style">
+
+    <form action="/Home/AkademisyenKayitOl" class="style__form" method="post">
+        <h1 class="style__title">Akademisyen Kayıt Ekranı</h1>
+
+        @if (ViewBag.HataMesaji != null)
+        {
+            <div class="style__viewbag">
+                @ViewBag.HataMesaji
+            </div>
+        }
+        <div class="style__content">
+            <div class="style__box">
+                <i class="bx bx-lock-alt"></i>
+
+                <div class="style__box-input">
+                    <input type="text" required class="style__input" name="AkademisyenNumarasi" maxlength="9" placeholder=" ">
+                    <label class="style__label">Akedemisyen Numarası</label>
+                </div>
+            </div>
+            <div class="style__box">
+                <i class="bx bx-lock-alt"></i>
+
+                <div class="style__box-input">
+                    <input type="text" required class="style__input" name="AkademisyenIsim" placeholder=" ">
+                    <label class="style__label">İsim</label>
+                </div>
+            </div>
+
+            <div class="style__box">
+                <i class="bx bx-lock-alt"></i>
+
+                <div class="style__box-input">
+                    <input type="text" required class="style__input" name="AkademisyenSoyisim" placeholder=" ">
+                    <label class="style__label">Soyisim</label>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="style__button">Kayıt Ekle</button>
+
+    </form>
+</div>
+
+
+

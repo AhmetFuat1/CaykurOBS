@@ -7,10 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\css\PanelKodlar.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Models\SorguKomutları\SorguKomutlari.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\css\PanelKodlar.css" />
     <None Include="wwwroot\css\StyleKodlar.css" />
   </ItemGroup>
 
