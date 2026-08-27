@@ -103,7 +103,6 @@ namespace ÇaykurOBS.Models
                 return 0;
             }
         }
-
         public static int AkademisyenKayitKontrol(string AkademisyenNumarasi, string Sifre)
         {
             SqlConnection baglanti = BaglantiAcma();
