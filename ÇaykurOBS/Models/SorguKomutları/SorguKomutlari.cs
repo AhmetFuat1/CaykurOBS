@@ -11,7 +11,60 @@ namespace ÇaykurOBS.Models
             baglanti.Open();
             return baglanti;
         }
-
+        public static int DersEkle(Ders YeniDers)
+        {
+            SqlConnection baglanti = BaglantiAcma();
+            string DersKodu = YeniDers.DersKodu;
+            string kontrolSorgusu = "SELECT COUNT(*) FROM Dersler WHERE DersKodu = @pDersKodu";
+            SqlCommand kontrol = new SqlCommand(kontrolSorgusu, baglanti);
+            kontrol.Parameters.AddWithValue("@pDersKodu", DersKodu);
+            int kayitSayisi = (int)kontrol.ExecuteScalar();
+            if (kayitSayisi > 0)
+            {
+                baglanti.Close();
+                return 0;
+            }
+            else
+            {
+                string kayit = "INSERT INTO Dersler (OgretmenID, Kredisi, DersAdi, DersKodu) VALUES (@OgretmenID, @Kredisi, @DersAdi, @DersKodu)";
+                SqlCommand kayitkomutu = new SqlCommand(kayit, baglanti);
+                kayitkomutu.Parameters.AddWithValue("@OgretmenID", YeniDers.OgretmenID);
+                kayitkomutu.Parameters.AddWithValue("@Kredisi", YeniDers.DersKredisi);
+                kayitkomutu.Parameters.AddWithValue("@DersAdi", YeniDers.DersAdi);
+                kayitkomutu.Parameters.AddWithValue("@DersKodu", YeniDers.DersKodu);
+                kayitkomutu.ExecuteNonQuery();
+                baglanti.Close();
+                return 1;
+            }
+        }
+        public static int DersDuzenle(int DersID, Ders YeniDers)
+        {
+            SqlConnection baglanti = BaglantiAcma();
+            string DersKodu = YeniDers.DersKodu;
+            string kontrolSorgusu = "SELECT COUNT(*) FROM Dersler WHERE DersKodu = @pDersKodu AND DersID != @pDersID";
+            SqlCommand kontrol = new SqlCommand(kontrolSorgusu, baglanti);
+            kontrol.Parameters.AddWithValue("@pDersKodu", DersKodu);
+            kontrol.Parameters.AddWithValue("@pDersID", DersID);
+            int kayitSayisi = (int)kontrol.ExecuteScalar();
+            if (kayitSayisi > 0)
+            {
+                baglanti.Close();
+                return 0;
+            }
+            else
+            {
+                string sorgu = "UPDATE Dersler SET DersAdi=@DersAdi, Kredisi=@DersKredisi, OgretmenID=@OgretmenID, DersKodu=@DersKodu WHERE DersID=@DersID";
+                SqlCommand komut = new SqlCommand(sorgu, baglanti);
+                komut.Parameters.AddWithValue("@DersID", DersID);
+                komut.Parameters.AddWithValue("@DersAdi", YeniDers.DersAdi);
+                komut.Parameters.AddWithValue("@DersKredisi", YeniDers.DersKredisi);
+                komut.Parameters.AddWithValue("@OgretmenID", YeniDers.OgretmenID);
+                komut.Parameters.AddWithValue("@DersKodu", YeniDers.DersKodu);
+                komut.ExecuteNonQuery();
+                baglanti.Close();
+                return 1;
+            }
+        }
         public static int OgrenciKayitEkle(Ogrenci YeniOgrenci)
         {
             SqlConnection baglanti = BaglantiAcma();
@@ -46,7 +99,6 @@ namespace ÇaykurOBS.Models
                 return 1;
             }
         }
-
         public static int AkademisyenKayitEkle(Akademisyen YeniAkademisyen)
         {
             SqlConnection baglanti = BaglantiAcma();
@@ -81,7 +133,6 @@ namespace ÇaykurOBS.Models
                 return 1;
             }
         }
-
         public static int OgrenciKayitKontrol(string OgrenciNumarasi, string Sifre)
         {
             SqlConnection baglanti = BaglantiAcma();
@@ -148,7 +199,6 @@ namespace ÇaykurOBS.Models
             baglanti.Close();
             return 0;
         }
-
         public static int VarsayilanSifre(int OgrenciID)
         {
             SqlConnection baglanti = BaglantiAcma();
@@ -162,7 +212,6 @@ namespace ÇaykurOBS.Models
             baglanti.Close();
             return 0;
         }
-
         public static int VarsayilanSifreAkademisyen(int AkademisyenID)
         {
             SqlConnection baglanti = BaglantiAcma();
@@ -176,7 +225,6 @@ namespace ÇaykurOBS.Models
             baglanti.Close();
             return 0;
         }
-
         public static int EpostaNumaraDogrulama(string OgrenciNumarasi, string Email)
         {
             SqlConnection baglanti = BaglantiAcma();
@@ -198,7 +246,6 @@ namespace ÇaykurOBS.Models
                 return 0;
             }
         }
-
         public static int EpostaNumaraDogrulamaAkademisyen(string AkademisyenNumarasi, string Email)
         {
             SqlConnection baglanti = BaglantiAcma();
@@ -221,7 +268,48 @@ namespace ÇaykurOBS.Models
                 return 0;
             }
         }
+        public static List<Ders> DersGetir()
+        {
+            List<Ders> liste = new List<Ders>();
+            SqlConnection baglanti = BaglantiAcma();
+            string sorgu = "SELECT Dersler.DersID, Dersler.DersAdi, Dersler.Kredisi, Dersler.DersKodu , Ogretmenler.OgretmenAdi, Ogretmenler.OgretmenSoyadi FROM Dersler " +
+                            "JOIN Ogretmenler ON Dersler.OgretmenID=Ogretmenler.OgretmenID";
+            SqlCommand komut = new SqlCommand(sorgu, baglanti);
+            SqlDataReader veriler = komut.ExecuteReader();
 
+            while (veriler.Read())
+            {
+                Ders drs = new Ders();
+                drs.DersAdi = veriler["DersAdi"].ToString();
+                drs.DersKodu = veriler["DersKodu"].ToString();
+                drs.DersKredisi = Convert.ToInt32(veriler["Kredisi"]);  
+                drs.DersID = Convert.ToInt32(veriler["DersID"]);
+                drs.OgretmenAdiSoyadi = veriler["OgretmenAdi"].ToString() + " " + veriler["OgretmenSoyadi"].ToString();
+                liste.Add(drs);
+            }
+            baglanti.Close();
+            return liste;
+        }
+        public static List<Ders> AkademisyenDersGetir(int AkademisyenID)
+        {
+            List<Ders> liste = new List<Ders>();
+            SqlConnection baglanti = BaglantiAcma();
+            string sorgu = "SELECT DersAdi,Kredisi,DersKodu FROM Dersler WHERE OgretmenID=@OgretmenID";
+            SqlCommand komut = new SqlCommand(sorgu, baglanti);
+            komut.Parameters.AddWithValue("@OgretmenID", AkademisyenID);
+            SqlDataReader veriler = komut.ExecuteReader();
+
+            while (veriler.Read())
+            {
+                Ders akdmsyndrs = new Ders();
+                akdmsyndrs.DersAdi = veriler["DersAdi"].ToString();
+                akdmsyndrs.DersKodu = veriler["DersKodu"].ToString();
+                akdmsyndrs.DersKredisi = Convert.ToInt32(veriler["Kredisi"]);
+                liste.Add(akdmsyndrs);
+            }
+            baglanti.Close();
+            return liste;
+        }
         public static List<Ogrenci> OgrenciGetir()
         {
             List<Ogrenci> liste = new List<Ogrenci>();
@@ -243,7 +331,6 @@ namespace ÇaykurOBS.Models
             baglanti.Close() ;
             return liste;
         }
-
         public static List<Akademisyen> AkademisyenGetir()
         {
             List<Akademisyen> liste = new List<Akademisyen>();
@@ -264,13 +351,34 @@ namespace ÇaykurOBS.Models
             baglanti.Close();
             return liste;     
         }
+        public static int DersSilme(int DersID)
+        {
+            SqlConnection baglanti = BaglantiAcma();
+            string sorgu = "DELETE FROM Dersler WHERE DersID=@DersID";
+            SqlCommand komut = new SqlCommand(sorgu, baglanti);
+            komut.Parameters.AddWithValue("@DersID", DersID);
+            komut.ExecuteNonQuery();
+            baglanti.Close();
 
+            return 0;
+        }
         public static int OgrenciSilme(int OgrenciID)
         {
             SqlConnection baglanti = BaglantiAcma();
             string sorgu = "DELETE FROM Ogrenciler WHERE OgrenciID=@OgrenciID";
             SqlCommand komut = new SqlCommand(sorgu, baglanti); 
             komut.Parameters.AddWithValue("@OgrenciId",  OgrenciID);
+            komut.ExecuteNonQuery();
+            baglanti.Close();
+
+            return 0;
+        }
+        public static int AkademisyenSilme(int AkademisyenID)
+        {
+            SqlConnection baglanti = BaglantiAcma();
+            string sorgu = "DELETE FROM Ogretmenler WHERE OgretmenID=@OgretmenID";
+            SqlCommand komut = new SqlCommand(sorgu, baglanti);
+            komut.Parameters.AddWithValue("@OgretmenId", AkademisyenID);
             komut.ExecuteNonQuery();
             baglanti.Close();
 

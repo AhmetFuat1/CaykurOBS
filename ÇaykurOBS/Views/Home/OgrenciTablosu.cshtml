@@ -2,9 +2,9 @@
     Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
 
-    <div class="style">  
-        <h1 class="style__title">Öğrenci Listesi</h1>
-            <table>
+<div class="custom-table-container">
+    <h1 class="style__title">Öğrenci Listesi</h1>
+    <table class="custom-table">
                 <thead>
                     <tr>
                         <th>Öğrenci İsmi</th>
@@ -25,15 +25,11 @@
                               <td>@ogr.OgrenciNumarasi</td>
                               <td>@ogr.Email</td>
                         <td>
-                            <a href="#E5" class="">
-                               Yönet
-                            </a>
-
-                            <a href="/Home/VarsayilanSifreOgrenci?ID=@ogr.OgrenciID" class="">
+                            <a href="/Home/VarsayilanSifreOgrenci?ID=@ogr.OgrenciID" class="style__btn-edit">
                                 Şifresini Sıfırla
                             </a>
 
-                            <a href="/Home/OgrenciSilme?ID=@ogr.OgrenciID" class="">
+                            <a href="/Home/OgrenciSilme?ID=@ogr.OgrenciID" class="style__btn-delete">
                                 Sil
                             </a>
                         </td>

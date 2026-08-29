@@ -152,8 +152,8 @@ img {
     color: var(--white-color);
 }
 
-    .style__forgot:hover {
-        text-decoration: underline;
+.style__forgot:hover {
+    text-decoration: underline;
 }
 
 .style__button {
@@ -209,3 +209,13 @@ img {
 }
 }
 
+.custom-select {
+    cursor: pointer;
+    background-color: transparent;
+    color: var(--black1);
+}
+.custom-select option {
+        background-color: var(--white);
+        color: var(--black1);
+        padding: 8px;
+}

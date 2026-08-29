@@ -1,0 +1,66 @@
+﻿@{
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+    <div class="style">
+
+        <form action="/Home/DersEkleme" class="style__form" method="post">
+        <h1 class="style__title">Ders Kayıt Ekranı</h1>
+         
+            @if (ViewBag.HataMesaji != null)
+            {
+                <div class="style__viewbag">
+                    @ViewBag.HataMesaji
+                </div>
+            }
+            <div class="style__content">
+                <div class="style__box">
+                    <i class="bx bx-lock-alt"></i>
+
+                    <div class="style__box-input">
+                        <input type="text" required class="style__input" name="DersKodu" maxlength="5" placeholder=" ">
+                        <label class="style__label">Ders Kodu</label>
+                    </div>
+                </div>
+                <div class="style__box">
+                    <i class="bx bx-lock-alt"></i>
+
+                    <div class="style__box-input">
+                        <input type="text" required class="style__input" name="DersAdi" placeholder=" ">
+                        <label class="style__label">Ders Adı</label>
+                    </div>
+                </div>
+
+                <div class="style__box">
+                    <i class="bx bx-lock-alt"></i>
+
+                    <div class="style__box-input">
+                        <input type="number" required class="style__input" name="DersKredisi" placeholder=" ">
+                        <label class="style__label">Ders Kredisi</label>
+                    </div>
+                </div>
+            <div class="style__box">
+                <i class="bx bx-user"> </i>
+                <div class="style__box-input">
+                    <select name="OgretmenID" required class="style__input custom-select">
+				@if (ViewBag.Akademisyenler != null)
+                {
+                    @foreach(var akdmsyn in (List<ÇaykurOBS.Models.Akademisyen>)ViewBag.Akademisyenler)
+                    {
+                        <option value="@akdmsyn.AkademisyenID">
+						@akdmsyn.AkademisyenIsim @akdmsyn.AkademisyenSoyisim
+                        </option>
+                    }
+                }
+                </select>
+                </div>
+            </div>
+            </div>
+
+            <button type="submit" class="style__button">Kayıt Ekle</button> 
+
+        </form>
+    </div>
+
+
+

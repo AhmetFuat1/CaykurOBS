@@ -1,96 +1,16 @@
 ﻿@{
-    Layout = null;
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AdminEkrani </title>
-    <link rel="stylesheet" href="~/css/PanelKodlar.css">
 
-</head>
-<body>  
-   <!-- -----------Menuler------------ -->
-   <div class="container" >
-       <div class="navigation">
-           <ul>
-               <li>
-					<a href="#">
-                        <span class="icon">
-                            <ion-icon name="person-circle-outline"></ion-icon>
-                       </span>
-                        <span class="title">Admin Paneli</span>
-                    </a>
-               </li>
+    <div class="dashboard-container">
 
-                <li>
-                    <a href="~/Home/AkedemisyenTablosu">
-                        <span class="icon">
-                            <ion-icon name="people-outline"></ion-icon>
-                        </span>
-                        <span class="title">Akademisyen Listesi</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="~/Home/OgrenciTablosu">
-                        <span class="icon">
-                            <ion-icon name="people-outline"></ion-icon>
-                        </span>
-                        <span class="title">Öğrenci Listesi</span>
-                    </a>
-                </li>
-                
-                <li>
-                    <a href="~/Home/AkademisyenKayit">
-                        <span class="icon">
-                            <ion-icon name="person-add-outline"></ion-icon>
-                        </span>
-                        <span class="title">Akademisyen Ekleme</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="~/Home/Kayit">
-                        <span class="icon">
-                            <ion-icon name="person-add-outline"></ion-icon>
-                        </span>
-                        <span class="title">Öğrenci Ekleme</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="^#">
-                        <span class="icon">
-                            <ion-icon name="book-outline"></ion-icon>
-                        </span>
-                        <span class="title">Ders Ekleme</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="^#">
-                        <span class="icon">
-                            <ion-icon name="key-outline"></ion-icon>
-                        </span>
-                        <span class="title">Şifre Sıfırlama</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="/Home/CikisYap">
-                        <span class="icon"><ion-icon name="exit-outline"></ion-icon></span>
-                        <span class="title">Oturumu Kapat</span>
-                    </a>
-                </li>
-           </ul>
-       </div>
-   </div>
-   <!-- ionicons kullandım burda ikon çekeceğim yeri tanıttım -->
-    <script type="module" src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.js"></script>
-
-</body>
-</html>
+        <div class="hosgeldin-karti">
+               <div class="hosgelidn-yazisi">
+                <h1>Hoşgeldin Admin,</h1>
+                <p>ÇaykurOBS Yönetim paneline hoş geldiniz. Buradan kullanıcıları yönetebilir, dersleri görüntüleyebilir ve daha fazlasını yapabilirsiniz.</p>
+               </div>
+               <div class="hosgeldin-logo">
+                      <img src="~/ArkaPlanResimleri/CaykurLogo.png" alt="Hoşgeldin Logo" />
+                </div>
+         </div>
+     </div>
