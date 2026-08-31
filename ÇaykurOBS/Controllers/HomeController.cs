@@ -16,15 +16,7 @@ namespace ÇaykurOBS.Controllers
         {
             return View();
         }
-        public IActionResult OgretmenPanel()
-        {
-            return View();
-        }
         public IActionResult OgrenciPanel()
-        {
-            return View();
-        }
-        public IActionResult EpostaNumaraDogrulamaAkademisyen()
         {
             return View();
         }
@@ -48,10 +40,6 @@ namespace ÇaykurOBS.Controllers
         {
             return View();
         }
-        public IActionResult OgretmenGiris()
-        {
-            return View();
-        }
         public IActionResult DersEkleme()
         {
             ViewBag.Akademisyenler = SorguKomutlari.AkademisyenGetir();
@@ -60,41 +48,6 @@ namespace ÇaykurOBS.Controllers
         public IActionResult DersDuzenleme()
         {
             ViewBag.Akademisyenler = SorguKomutlari.AkademisyenGetir();
-            return View();
-        }
-        public IActionResult NotDuzenleme()
-        {
-            ViewBag.Akademisyenler = SorguKomutlari.AkademisyenGetir();
-            return View();
-        }
-        public IActionResult AkademisyenOgrenciGoruntuleme()
-        {
-            int akademisyenID = HttpContext.Session.GetInt32("AkademisyenId") ?? 0;
-            if (akademisyenID == 0)
-            {
-                return View("OgretmenGiris");
-            }
-            ViewBag.Dersler = SorguKomutlari.AkademisyenDersGetir(akademisyenID);
-            return View();
-        }
-        public IActionResult AkademisyenOgrenciveNotGoruntuleme()
-        {
-            int akademisyenID = HttpContext.Session.GetInt32("AkademisyenId") ?? 0;
-            if (akademisyenID == 0)
-            {
-                return View("OgretmenGiris");
-            }
-            ViewBag.Dersler = SorguKomutlari.AkademisyenDersGetir(akademisyenID);
-            return View();
-        }
-        public IActionResult AkademisyenOgrenciGoruntulemeNot()
-        {
-            int akademisyenID = HttpContext.Session.GetInt32("AkademisyenId") ?? 0;
-            if (akademisyenID == 0)
-            {
-                return View("OgretmenGiris");
-            }
-            ViewBag.Dersler = SorguKomutlari.AkademisyenDersGetir(akademisyenID);
             return View();
         }
         public IActionResult VarsayilanSifreOgrenci(int ID)
@@ -143,12 +96,6 @@ namespace ÇaykurOBS.Controllers
             List<Ders> Dersler = SorguKomutlari.DersGetir();
             return View(Dersler);
         }
-        public IActionResult AkademisyenDersTablosu()
-        {
-            int AkademisyenID = HttpContext.Session.GetInt32("AkademisyenId") ?? 0;
-            List<Ders> Dersler = SorguKomutlari.AkademisyenDersGetir(AkademisyenID);
-            return View(Dersler);
-        }
         public IActionResult OgrenciTablosu()
         {
             List<Ogrenci> ogrenciler = SorguKomutlari.OgrenciGetir();
@@ -177,6 +124,7 @@ namespace ÇaykurOBS.Controllers
         [HttpGet]
         public IActionResult DersDuzenleme(int ID)
         {
+            ViewBag.Akademisyenler = SorguKomutlari.AkademisyenGetir();
             List<Ders> dersler = SorguKomutlari.DersGetir();
             Ders duzenlenecekDers = null;
 
@@ -190,23 +138,6 @@ namespace ÇaykurOBS.Controllers
             }
 
             return View(duzenlenecekDers);
-        }
-        [HttpGet]
-        public IActionResult NotDuzenleme(int DersID, int OgrenciID)
-        {
-            ViewBag.Akademisyenler = SorguKomutlari.AkademisyenGetir();
-            List<DersveNotlar> notListesi = SorguKomutlari.DersiAlanOgrencileriveNotlariGetir(DersID);
-            DersveNotlar duzenlenecekNot = null;
-
-            foreach (var not in notListesi)
-            {
-                if (not.DersID == DersID && not.OgrenciID == OgrenciID)
-                {
-                    duzenlenecekNot = not;
-                    break;
-                }
-            }
-            return View(duzenlenecekNot);
         }
         [HttpPost]
         public IActionResult DersEkleme(Ders YeniDers)
@@ -274,66 +205,6 @@ namespace ÇaykurOBS.Controllers
                     ViewBag.BasariliMesaji = "Kayıt başarılı!";
                     List<Ders> dersler = SorguKomutlari.DersGetir();
                     return View("DersTablosu", dersler);
-                }
-            }
-        }
-        [HttpPost]
-        public IActionResult NotDuzenleme(DersveNotlar YeniNot)
-        {
-            if (YeniNot.VizeNotu==null || YeniNot.FinalNotu==null)
-            {
-                ViewBag.HataMesaji = "Vize veya final notu boş bırakılamaz";
-                return View("NotDuzenleme", YeniNot);
-            }
-            else if (YeniNot.VizeNotu > 100 || YeniNot.FinalNotu > 100 || YeniNot.FinalNotu < 0 || YeniNot.VizeNotu < 0 ||( YeniNot.ButunlemeNotu.HasValue && (YeniNot.ButunlemeNotu < 0 || YeniNot.ButunlemeNotu > 100)))
-            {
-                ViewBag.HataMesaji = "Vize, Final ve Bütünleme notu 0 ile 100 arasında olmalıdır";
-                return View("NotDuzenleme", YeniNot);
-            }
-            else
-            {
-                int sonuc = SorguKomutlari.NotDuzenle(YeniNot);
-                if (sonuc == 0)
-                {
-                    ViewBag.HataMesaji = "Not düzenlenemedi";
-                    return View("NotDuzenleme", YeniNot);
-                }
-                else
-                {
-                    ViewBag.BasariliMesaji = "Kayıt başarılı!";
-                    List<DersveNotlar> derslerveNotlar = SorguKomutlari.DersiAlanOgrencileriveNotlariGetir(YeniNot.DersID);
-                    return View("NotOgrenciTablosu", derslerveNotlar);
-                }
-            }
-        }
-        [HttpPost]
-        public IActionResult NotGirme(int DersID)
-        {
-            ViewBag.SecilenDersID = DersID;
-            ViewBag.Ogrenciler = SorguKomutlari.DersiAlanOgrencileriGetir(DersID);
-            return View();
-        }
-        [HttpPost]
-        public IActionResult NotKaydet(NotGirme YeniNot)
-        {
-            ViewBag.Akademisyenler = SorguKomutlari.AkademisyenGetir();
-            if (YeniNot.DersID == 0 || YeniNot.OgrenciID == 0)
-            {
-                ViewBag.HataMesaji = "Lütfen dersi ve öğrenciyi seçiniz.";
-                return View("OgretmenPanel");
-            }
-            else
-            {
-                int sonuc = SorguKomutlari.NotGirme(YeniNot);
-                if (sonuc == 1 )
-                {
-                    ViewBag.BasariliMesaji = "Not girişi başarılı!";
-                    return View("OgretmenPanel");
-                }
-                else
-                {
-                    ViewBag.HataMesaji = "Seçilen öğrencinin notu zaten girmişsiniz lütfen ilgili menüden düzenleyin.";
-                    return View("NotGirme");
                 }
             }
         }
@@ -451,47 +322,6 @@ namespace ÇaykurOBS.Controllers
                 return View("OgrenciPanel");
             }
         }
-        [HttpPost]
-        public IActionResult AkademisyenGirisYap(Akademisyen YeniGiris)
-        {
-             string akademisyenNumarasi = YeniGiris.AkademisyenNumarasi;
-             string sifre = YeniGiris.AkademisyenSifre;
-
-             string adminNumarasi = "123456789";
-             string adminSifre = "admin123";
-
-             if (akademisyenNumarasi == adminNumarasi && sifre == adminSifre)
-             {
-                    return View("AdminPanel");
-             }
-             int sonuc = SorguKomutlari.AkademisyenKayitKontrol(akademisyenNumarasi, sifre);
-             if (sonuc == 0)
-             {
-                    ViewBag.HataMesaji = "Geçersiz akademisyen numarası veya şifre.";
-                    return View("OgretmenGiris");
-             }
-             else
-             {
-                    HttpContext.Session.SetInt32("AkademisyenId", sonuc);
-
-                    List<Akademisyen> tumHocalar = SorguKomutlari.AkademisyenGetir();
-
-                    foreach (var hoca in tumHocalar)
-                    {
-                    if (hoca.AkademisyenID == sonuc)
-                        {
-                        string adSoyad = $"{hoca.AkademisyenIsim} {hoca.AkademisyenSoyisim}";
-                        HttpContext.Session.SetString("KullaniciAdSoyad", adSoyad);
-                        break; 
-                        }
-                    }
-                     if (sifre == "123456")
-                     {
-                      return View("EpostaNumaraDogrulamaAkademisyen");
-                     }
-                    return View("OgretmenPanel");
-             }
-        }
        [HttpPost]
        public IActionResult EpostaNumaraDogrulama(OgrenciGiris YeniGiris)
         {
@@ -507,23 +337,6 @@ namespace ÇaykurOBS.Controllers
             {
                 HttpContext.Session.SetInt32("OgrenciId", sonuc);
                 return View("SifremiUnuttumPaneli");
-            }
-        }
-        [HttpPost]
-        public IActionResult EpostaNumaraDogrulamaAkademisyen(AkademisyenGiris YeniGiris)
-        {
-            string akademisyenNumarasi = YeniGiris.AkademisyenNumarasi;
-            string email = YeniGiris.AkademisyenEmail;
-            int sonuc = SorguKomutlari.EpostaNumaraDogrulamaAkademisyen(akademisyenNumarasi, email);
-            if (sonuc == 0)
-            {
-                ViewBag.HataMesaji = "Geçersiz akademisyen numarası veya e-posta.";
-                return View("EpostaNumaraDogrulamaAkademisyen");
-            }
-            else
-            {
-                HttpContext.Session.SetInt32("AkademisyenId", sonuc);
-                return View("SifremiUnuttumPaneliAkademisyen");
             }
         }
         [HttpPost]
@@ -551,44 +364,6 @@ namespace ÇaykurOBS.Controllers
                SorguKomutlari.SifreSifirlama(OgrenciId, yeniSifre);
                return View("Login");
             }
-        }
-        [HttpPost]
-        public IActionResult SifremiUnuttumPaneliAkademisyen(Akademisyen YeniAkademisyen)
-        {
-            if (YeniAkademisyen.AkademisyenSifre == null || YeniAkademisyen.AkademisyenSifreTekrar == null)
-            {
-                ViewBag.HataMesaji = "Lütfen tüm alanları doldurun.";
-                return View("SifremiUnuttumPaneliAkademisyen");
-            }
-            else if (YeniAkademisyen.AkademisyenSifre != YeniAkademisyen.AkademisyenSifreTekrar)
-            {
-                ViewBag.HataMesaji = "Şifreler eşleşmiyor.";
-                return View("SifremiUnuttumPaneliAkademisyen");
-            }
-            else if (YeniAkademisyen.AkademisyenSifre.Length < 6)
-            {
-                ViewBag.HataMesaji = "Şifre en az 6 karakter olmalıdır.";
-                return View("SifremiUnuttumPaneliAkademisyen");
-            }
-            else
-            {
-                string yeniSifre = YeniAkademisyen.AkademisyenSifre;
-                int AkademisyenId = HttpContext.Session.GetInt32("AkademisyenId") ?? 0;
-                SorguKomutlari.SifreSifirlamaAkademisyen(AkademisyenId, yeniSifre);
-                return View("OgretmenGiris");
-            }
-        }
-        [HttpPost]
-        public IActionResult DersOgrenciTablosu(int DersID)
-        {
-            List<DersSecimleri> dersSecimleri = SorguKomutlari.DersiAlanOgrencileriGetir(DersID);
-            return View(dersSecimleri);
-        }
-        [HttpPost]
-        public IActionResult NotOgrenciTablosu(int DersID)
-        {
-            List<DersveNotlar> dersveNotlar = SorguKomutlari.DersiAlanOgrencileriveNotlariGetir(DersID);
-            return View(dersveNotlar);
         }
     }
 }
