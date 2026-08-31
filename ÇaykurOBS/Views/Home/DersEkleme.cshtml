@@ -43,6 +43,7 @@
                 <i class="bx bx-user"> </i>
                 <div class="style__box-input">
                     <select name="OgretmenID" required class="style__input custom-select">
+                    <option value="" disabled selected>Lütfen bir Akademisyen seçiniz...</option>
 				@if (ViewBag.Akademisyenler != null)
                 {
                     @foreach(var akdmsyn in (List<ÇaykurOBS.Models.Akademisyen>)ViewBag.Akademisyenler)

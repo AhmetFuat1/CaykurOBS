@@ -1,0 +1,42 @@
+﻿@{
+    Layout = "~/Views/Shared/AkademisyenLayout.cshtml";
+}
+
+    <div class="style">
+
+        <form action="/Home/DersOgrenciTablosu" class="style__form" method="post">
+        <h1 class="style__title">Öğrenci görüntülemek istediğiniz dersi seçiniz.</h1>
+         
+            @if (ViewBag.HataMesaji != null)
+            {
+                <div class="style__viewbag">
+                    @ViewBag.HataMesaji
+                </div>
+            }
+            <div class="style__content">
+            <div class="style__box">
+                <i class="bx bx-user"> </i>
+                <div class="style__box-input">
+                    <select name="DersID" required class="style__input custom-select">
+                        <option value="" disabled selected>Lütfen bir ders seçiniz...</option>
+				@if (ViewBag.Dersler != null)
+                {
+                    @foreach(var drs in (List<ÇaykurOBS.Models.Ders>)ViewBag.Dersler)
+                    {
+                        <option value="@drs.DersID">
+						@drs.DersAdi
+                        </option>
+                    }
+                }
+                </select>
+                </div>
+            </div>
+            </div>
+
+            <button type="submit" class="style__button">Öğrencileri Listele</button> 
+
+        </form>
+    </div>
+
+
+

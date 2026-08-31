@@ -1,0 +1,32 @@
+﻿@{
+    Layout = "~/Views/Shared/AkademisyenLayout.cshtml";
+}
+
+<div class="custom-table-container">
+    <h1 class="style__title">Öğrenci Listesi</h1>
+    <table class="custom-table">
+        <thead>
+            <tr>
+                <th>Ders İsmi</th>
+                <th>Kredisi</th>
+                <th>Ders Kodu</th>
+                <th>Dersi Alan Öğrenciler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count > 0)
+            {
+                @foreach (var drsogr in Model)
+                {
+                    <tr>
+                        <td>@drsogr.DersAdi</td>
+                        <td>@drsogr.DersKredisi</td>
+                        <td>@drsogr.DersKodu</td>
+                        <td>@drsogr.OgrenciAdiSoyadi</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+</div>
