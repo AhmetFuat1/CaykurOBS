@@ -9,5 +9,6 @@
         public string AkademisyenEmail { get; set; }   
         public string AkademisyenSifre { get; set; }
         public string AkademisyenSifreTekrar { get; set; }
+        public string AkademisyenDurum { get; set; }
     }
 }

@@ -9,6 +9,6 @@
         public string DersAdi { get; set; }
         public string DersKodu { get; set; }
         public string OgrenciAdiSoyadi { get; set; }
-
+        public string OgretmenAdiSoyadi { get; set; }
     }
 }

@@ -6,15 +6,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EpostaNumaraDogrulamaEkrani </title>
+    <title>LoginEkrani</title>
     <link rel="stylesheet" href="~/css/StyleKodlar.css">
+
 </head>
 <body>
     <div class="style">
         <img src="~/ArkaPlanResimleri/EpostaveNumaraDogrulamaEkrani.jpg" alt="Çaykur Arka Plan" class="style__img">
 
-        <form action="/Home/EpostaNumaraDogrulama" class="style__form" method="post">
-            <h1 class="style__title">Şifremi Unuttum</h1>
+        <form action="/Ogrenci/GirisYap" class="style__form" method="post">
+            <h1 class="style__title">ÇAYKUR ÖĞRENCİ BİLGİ SİSTEMİ</h1>
 
             @if (ViewBag.HataMesaji != null)
             {
@@ -25,8 +26,6 @@
 
             <div class="style__content">
                 <div class="style__box">
-                    <i class="bx bx-lock-alt"></i>
-
                     <div class="style__box-input">
                         <input type="text" required class="style__input" name="OgrenciNumarasi" maxlength="9" placeholder="">
                         <label class="style__label">Öğrenci Numarası</label>
@@ -34,21 +33,26 @@
                 </div>
 
                 <div class="style__box">
-                    <i class="ri-lock-2-line style__icon"></i>
-
-
                     <div class="style__box-input">
-                        <input type="email" required class="style__input" name="Email" placeholder="">
-                        <label class="style__label">E-Mail</label>            
+                        <input type="password" required class="style__input" name="Sifre" placeholder="">
+                        <label class="style__label">Şifre</label>
                     </div>
                 </div>
             </div>
 
-            <button type="submit"  class="style__button">Şifreyi Sıfırla</button>
+            <div class="style__check">
+                <div class="style__check-group">
+                    <input type="checkbox" class="style__check-input" name="BeniHatirla" value="true">
+                    <label class="style__check-label">Beni Hatırla</label>
+                </div>
 
-           
+                <a href="/Akademisyen/OgretmenGiris" class="style__forgot">Akedemisyen Girişi İçin Tıklayınız</a>
+            </div>
+
+            <button type="submit" class="style__button">Giriş</button>
         </form>
     </div>
+
 
 </body>
 </html>

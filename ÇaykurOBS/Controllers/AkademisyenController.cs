@@ -64,7 +64,7 @@ namespace ÇaykurOBS.Controllers
         public IActionResult CikisYap()
         {
             HttpContext.Session.Clear();
-            return RedirectToAction("Login", "Home");
+            return View("OgretmenGiris");
         }
         [HttpGet]
         public IActionResult NotDuzenleme(int DersID, int OgrenciID)
@@ -152,7 +152,7 @@ namespace ÇaykurOBS.Controllers
 
             if (akademisyenNumarasi == adminNumarasi && sifre == adminSifre)
             {
-                return View("AdminPanel");
+                return View("~/Views/Home/AdminPanel.cshtml");
             }
             int sonuc = AkademisyenSorguKomutlari.AkademisyenKayitKontrol(akademisyenNumarasi, sifre);
             if (sonuc == 0)

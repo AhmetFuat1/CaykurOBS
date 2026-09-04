@@ -1,5 +1,4 @@
 ﻿using Microsoft.Data.SqlClient;
-using System;
 namespace ÇaykurOBS.Models
 {
     public class AkademisyenSorguKomutlari
@@ -65,7 +64,7 @@ namespace ÇaykurOBS.Models
                 kayitkomutu.Parameters.AddWithValue("@OgrenciID", YeniNot.OgrenciID);
                 kayitkomutu.Parameters.AddWithValue("@VizeNotu", YeniNot.VizeNotu);
                 kayitkomutu.Parameters.AddWithValue("@FinalNotu", YeniNot.FinalNotu);
-                kayitkomutu.Parameters.AddWithValue("@ButunlemeNotu", (object)YeniNot.ButunlemeNotu ?? DBNull.Value);
+                kayitkomutu.Parameters.AddWithValue("@ButunlemeNotu",YeniNot.ButunlemeNotu??0);
                 kayitkomutu.ExecuteNonQuery();
                 baglanti.Close();
                 return 1;
@@ -81,7 +80,7 @@ namespace ÇaykurOBS.Models
                 komut.Parameters.AddWithValue("@OgrenciID", YeniNot.OgrenciID);
                 komut.Parameters.AddWithValue("@VizeNotu", YeniNot.VizeNotu);
                 komut.Parameters.AddWithValue("@FinalNotu", YeniNot.FinalNotu);    
-                komut.Parameters.AddWithValue("@ButunlemeNotu", (object)YeniNot.ButunlemeNotu ?? DBNull.Value);
+                komut.Parameters.AddWithValue("@ButunlemeNotu", YeniNot.ButunlemeNotu??0);
                 int etkilenen = komut.ExecuteNonQuery(); 
                 baglanti.Close();
                 return etkilenen;
@@ -174,14 +173,13 @@ namespace ÇaykurOBS.Models
                 notogr.DersAdi = veriler["DersAdi"].ToString();
                 notogr.DersKodu = veriler["DersKodu"].ToString();
                 notogr.OgrenciAdiSoyadi = veriler["Ad"].ToString() + " " + veriler["Soyad"].ToString();
-                notogr.DersKodu = veriler["DersKodu"].ToString();
                 notogr.HarfNotu = veriler["HarfNotu"].ToString();
                 notogr.DersKredisi = Convert.ToInt32(veriler["Kredisi"]);
                 notogr.DersID = Convert.ToInt32(veriler["DersID"]);
                 notogr.OgrenciID = Convert.ToInt32(veriler["OgrenciID"]);
                 notogr.VizeNotu = Convert.ToInt32(veriler["VizeNotu"]);
                 notogr.FinalNotu = Convert.ToInt32(veriler["FinalNotu"]);
-                notogr.ButunlemeNotu = veriler["ButunlemeNotu"] == DBNull.Value ? null : Convert.ToInt32(veriler["ButunlemeNotu"]);
+                notogr.ButunlemeNotu = veriler["ButunlemeNotu"] == DBNull.Value ? 0 : Convert.ToInt32(veriler["ButunlemeNotu"]);
                 notogr.Ortalama = Convert.ToInt32(veriler["Ortalama"]);    
                 liste.Add(notogr);
             }

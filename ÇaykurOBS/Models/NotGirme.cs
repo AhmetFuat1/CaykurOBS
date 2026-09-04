@@ -6,6 +6,6 @@
         public int VizeNotu { get; set; }
         public int FinalNotu { get; set; }
         public int? ButunlemeNotu { get; set; }
-        public string HarfNotu { get; set; }
+        public string HarfNotu { get; set; }  
     }
 }

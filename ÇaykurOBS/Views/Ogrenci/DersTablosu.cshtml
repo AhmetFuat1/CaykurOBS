@@ -1,0 +1,72 @@
+﻿@{
+    Layout = "~/Views/Shared/OgrenciLayout.cshtml";
+}
+
+<div class="custom-table-container">
+    <h1 class="style__title">Ders Alma Ekranı</h1>
+
+    <p><strong>Seçilen Toplam Kredi:</strong> 
+        <span id="krediGosterge">@(ViewBag.MevcutKredi ?? 0)</span>
+    / 30</p>
+
+    <form action="/Ogrenci/DersSeciminiKaydet" method="post">
+
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>Seç</th>
+                    <th>Ders İsmi</th>
+                    <th>Kredisi</th>
+                    <th>Ders Kodu</th>
+                    <th>Dersi Veren Akademisyen</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count > 0)
+                {
+                    @foreach (var drs in Model)
+                    {
+                        <tr>
+                            <td>
+                                <input type="checkbox"
+                                       name="secilenDersler"
+                                       value="@drs.DersID"
+                                       data-kredi="@drs.DersKredisi"
+                                       onchange="krediHesapla(this)" />
+                            </td>
+                            <td>@drs.DersAdi</td>
+                            <td>@drs.DersKredisi</td>
+                            <td>@drs.DersKodu</td>
+                            <td>@drs.OgretmenAdiSoyadi</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
+        <br />
+        <button type="submit" class="style__btn-edit">Seçimleri Kaydet</button>
+
+    </form> 
+</div>
+
+
+<script>
+    var toplam = @(ViewBag.MevcutKredi ?? 0);
+
+    function krediHesapla(kutu) {
+        var kredi = parseInt(kutu.getAttribute("data-kredi"));
+
+        if (kutu.checked) {
+            if (toplam + kredi > 30) {
+                alert("30 krediyi aşamazsınız!");
+                kutu.checked = false;
+            } else {
+                toplam += kredi;
+            }
+        } else {
+            toplam -= kredi;
+        }
+        document.getElementById("krediGosterge").innerText = toplam;
+    }
+</script>

@@ -11,6 +11,7 @@
                         <th>Öğrenci Soyismi</th>
                         <th>Öğrenci Numarası</th>
                         <th>Öğrenci Epostası</th>
+                        <th>Durum</th>
                         <th>İşlemler</th>
                     </tr>
                 </thead>
@@ -24,13 +25,18 @@
                               <td>@ogr.Soyisim</td>
                               <td>@ogr.OgrenciNumarasi</td>
                               <td>@ogr.Email</td>
+                              <td>@ogr.Durum</td>
                         <td>
                             <a href="/Home/VarsayilanSifreOgrenci?ID=@ogr.OgrenciID" class="style__btn-edit">
                                 Şifresini Sıfırla
                             </a>
 
                             <a href="/Home/OgrenciSilme?ID=@ogr.OgrenciID" class="style__btn-delete">
-                                Sil
+                                İlişiği Kes
+                            </a>
+
+                            <a href="/Home/OgrenciYenidenEkle?ID=@ogr.OgrenciID" class="style__btn-edit">
+                                Yeniden Ekle
                             </a>
                         </td>
                           </tr>

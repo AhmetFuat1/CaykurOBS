@@ -1,0 +1,41 @@
+﻿@{
+    Layout = "~/Views/Shared/OgrenciLayout.cshtml";
+}
+
+<div class="custom-table-container">
+    <h1 class="style__title">Derslerim ve Notlarım</h1>
+    <table class="custom-table">
+        <thead>
+            <tr>
+                <th>Ders İsmi</th>
+                <th>Kredisi</th>
+                <th>Ders Kodu</th>
+                <th>Dersi Veren Akademisyen</th>
+                <th>Vize Notu</th>
+                <th>Final Notu</th>
+                <th>Bütünleme Notu</th>
+                <th>Ortalaması</th>
+                <th>Harf Notu</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count > 0)
+            {
+                @foreach (var notogr in Model)
+                {
+                    <tr>
+                        <td>@notogr.DersAdi</td>
+                        <td>@notogr.DersKredisi</td>
+                        <td>@notogr.DersKodu</td>
+                        <td>@notogr.OgrenciAdiSoyadi</td>
+                        <td>@notogr.VizeNotu</td>
+                        <td>@notogr.FinalNotu</td>
+                        <td>@notogr.ButunlemeNotu</td>
+                        <td>@notogr.Ortalama</td>
+                        <td>@notogr.HarfNotu</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

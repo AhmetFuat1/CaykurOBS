@@ -1,8 +1,10 @@
 ﻿@{
     Layout = "~/Views/Shared/AdminLayout.cshtml";
+    var dersiAlanOgrenciler = ViewBag.DersiAlanOgrenciler as List<ÇaykurOBS.Models.DersveNotlar>;
 }
+    <div style="display: flex; gap: 30px; align-items: flex-start; margin-top: 20px;">
 
-    <div class="style">
+    <div class="style" style="margin: 0; flex: 1; max-width: 450px;">
 
         <form action="/Home/DersDuzenleme" class="style__form" method="post">
         <h1 class="style__title">Ders Düzenleme Ekranı</h1>
@@ -64,5 +66,34 @@
         </form>
     </div>
 
+    <div class="custom-table-container" style="margin: 0; flex: 1.5;">
+    <h1 class="style__title">Ders Kaydı</h1>
+    <table class="custom-table">
+        <thead>
+            <tr>
+                <th>Öğrenci Adı Soyadı</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (dersiAlanOgrenciler != null && dersiAlanOgrenciler.Count > 0)
+            {
+                @foreach (var drsogr in dersiAlanOgrenciler)
+                {
+                    <tr>
+                        <td>@drsogr.OgrenciAdiSoyadi</td>
+                        <td>  
+                            <a href="/Home/OnayliDersSilme?DersID=@drsogr.DersID&OgrenciID=@drsogr.OgrenciID" class="style__btn-delete">
+                                Sil
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+</div>
 
 

@@ -11,6 +11,7 @@
                 <th>Akademisyen Soyismi</th>
                 <th>Akademisyen Numarası</th>
                 <th>Akademisyen Epostası</th>
+                <th>Durum</th>
                 <th>İşlemler</th>
             </tr>
         </thead>
@@ -24,13 +25,18 @@
                         <td>@akdmsyn.AkademisyenSoyisim</td>
                         <td>@akdmsyn.AkademisyenNumarasi</td>
                         <td>@akdmsyn.AkademisyenEmail</td>
+                        <td>@akdmsyn.AkademisyenDurum</td>
                         <td>
                             <a href="/Home/VarsayilanSifreAkademisyen?ID=@akdmsyn.AkademisyenID" class="style__btn-edit">
                                 Şifresini Sıfırla
                             </a>
 
                             <a href="/Home/AkademisyenSilme?ID=@akdmsyn.AkademisyenID" class="style__btn-delete">
-                                Sil
+                                İlişiği Kes
+                            </a>
+
+                            <a href="/Home/AkademisyenYenidenEkle?ID=@akdmsyn.AkademisyenID" class="style__btn-edit">
+                                Yeniden Ekle
                             </a>
                         </td>
                     </tr>

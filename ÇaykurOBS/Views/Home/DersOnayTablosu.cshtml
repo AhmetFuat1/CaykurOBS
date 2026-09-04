@@ -1,0 +1,44 @@
+﻿@{
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<div class="custom-table-container">
+    <h1 class="style__title">Ders Kaydı</h1>
+    <table class="custom-table">
+        <thead>
+            <tr>
+                <th>Ders İsmi</th>
+                <th>Kredisi</th>
+                <th>Dersi Veren Akademisyen</th>
+                <th>Ders Kodu</th>
+                <th>Öğrenci Adı Soyadı</th>
+                <th>Durum</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count > 0)
+            {
+                @foreach (var drsscm in Model)
+                {
+                    <tr>
+                        <td>@drsscm.DersAdi</td>
+                        <td>@drsscm.DersKredisi</td>
+                        <td>@drsscm.OgretmenAdiSoyadi</td>
+                        <td>@drsscm.DersKodu</td>
+                        <td>@drsscm.OgrenciAdiSoyadi</td>
+						<td>@drsscm.Durum</td>
+                        <td>
+                            <a href="/Home/DersSecimOnaylama?DersID=@drsscm.DersID&OgrenciID=@drsscm.OgrenciID" class="style__btn-edit">
+                                Onayla
+                            </a>
+                            <a href="/Home/DersSecimSilme?DersID=@drsscm.DersID&OgrenciID=@drsscm.OgrenciID" class="style__btn-delete">
+                                Reddet
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
