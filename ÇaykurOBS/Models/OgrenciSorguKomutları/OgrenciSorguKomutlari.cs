@@ -14,7 +14,7 @@ namespace ÇaykurOBS.Models
         {
             SqlConnection baglanti = BaglantiAcma();
 
-            string sorgu = "SELECT OgrenciID FROM Ogrenciler WHERE Numara = @pNumara AND Sifre = @pSifre";
+            string sorgu = "SELECT OgrenciID FROM Ogrenciler WHERE Numara = @pNumara AND Sifre = @pSifre AND Durum = 'Aktif Öğrenci'";
             SqlCommand komut = new SqlCommand(sorgu, baglanti);
             komut.Parameters.AddWithValue("@pNumara", OgrenciNumarasi);
             komut.Parameters.AddWithValue("@pSifre", Sifre);
