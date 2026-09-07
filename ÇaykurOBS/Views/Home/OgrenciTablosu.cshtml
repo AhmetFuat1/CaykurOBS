@@ -4,14 +4,27 @@
 
 <div class="custom-table-container">
     <h1 class="style__title">Öğrenci Listesi</h1>
-    <table class="custom-table">
+    <div class="arama-kapsayici">
+        <button type="button" id="temizle-btn" class="arama-temizle-btn" style="display:none;">&#10005;</button>
+        <div class="arama-input-kutu">
+            <input type="text" class="arama-input" id="arama-input" placeholder="Ara...🔎">
+        </div>
+		<button type="button" class="arama-btn" onclick="aramaYap()">Ara</button>
+    </div>
+    <table class="custom-table" id="tablo">
                 <thead>
                     <tr>
-                        <th>Öğrenci İsmi</th>
-                        <th>Öğrenci Soyismi</th>
+                        <th onclick="sirala(0)" style="cursor: pointer; user-select: none;">
+                            Öğrenci İsmi <span class="sirala-ikon"> ↕️</span>          
+                       </th>
+                        <th onclick="sirala(1)"  style="cursor: pointer; user-select: none;">
+				        	Öğrenci Soyismi <span class="sirala-ikon"> ↕️</span>
+                        </th>
                         <th>Öğrenci Numarası</th>
                         <th>Öğrenci Epostası</th>
-                        <th>Durum</th>
+                        <th onclick="sirala(4)" style="cursor: pointer; user-select: none;">
+				        	Durum <span class="sirala-ikon"> ↕️</span>
+                        </th>
                         <th>İşlemler</th>
                     </tr>
                 </thead>
@@ -20,29 +33,29 @@
                       {
                           @foreach (var ogr in Model)
                           {
-                          <tr>
+                     <tr>
                               <td>@ogr.Isim</td>
                               <td>@ogr.Soyisim</td>
                               <td>@ogr.OgrenciNumarasi</td>
                               <td>@ogr.Email</td>
                               <td>@ogr.Durum</td>
-                        <td>
-                            <a href="/Home/VarsayilanSifreOgrenci?ID=@ogr.OgrenciID" class="style__btn-edit">
-                                Şifresini Sıfırla
-                            </a>
-
-                            <a href="/Home/OgrenciSilme?ID=@ogr.OgrenciID" class="style__btn-delete">
-                                İlişiği Kes
-                            </a>
-
-                            <a href="/Home/OgrenciYenidenEkle?ID=@ogr.OgrenciID" class="style__btn-edit">
-                                Yeniden Ekle
-                            </a>
-                        </td>
-                          </tr>
+                              <td>
+                                  <a href="/Home/VarsayilanSifreOgrenci?ID=@ogr.OgrenciID" class="style__btn-edit">
+                                       Şifresini Sıfırla
+                                  </a>
+                                  <a href="/Home/OgrenciSilme?ID=@ogr.OgrenciID" class="style__btn-delete">
+                                      İlişiği Kes
+                                 </a>
+                                  <a href="/Home/OgrenciYenidenEkle?ID=@ogr.OgrenciID" class="style__btn-edit">
+                                       Yeniden Ekle
+                                  </a>
+                              </td>
+                     </tr>
                           }
                       }
         </tbody>
             </table>
 
     </div>
+    <script src="~/js/SiralamaScripti.js"></script>
+    <script src="~/js/AramaScripti.js"></script>

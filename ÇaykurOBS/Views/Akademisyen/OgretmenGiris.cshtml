@@ -15,48 +15,36 @@
 
         <form action="/Akademisyen/AkademisyenGirisYap" class="style__form" method="post">
             <h1 class="style__title">ÇAYKUR AKADEMİSYEN BİLGİ SİSTEMİ</h1>
-
             @if (ViewBag.HataMesaji != null)
             {
                 <div class="style__viewbag">
                     @ViewBag.HataMesaji
                 </div>
             }
-
             <div class="style__content">
                 <div class="style__box">
                     <i class="bx bx-lock-alt"></i>
-
                     <div class="style__box-input">
                         <input type="text" required class="style__input" name="AkademisyenNumarasi" maxlength="9" placeholder="">
                         <label class="style__label">Akedemisyen Numarası</label>
                     </div>
                 </div>
-
                 <div class="style__box">
-
-
                     <div class="style__box-input">
                         <input type="password" required class="style__input" name="AkademisyenSifre" placeholder="">
                         <label  class="style__label">Şifre</label>
                     </div>
                 </div>
             </div>
-
             <div class="style__check">
                 <div class="style__check-group">
                     <input type="checkbox" class="style__check-input" name="BeniHatirla" value="true">
                     <label  class="style__check-label">Beni Hatırla</label>
                 </div>
-
                 <a href="/Ogrenci/login" class="style__forgot">Öğrenci Girişi İçin Tıklayınız</a>
             </div>
-
-            <button type="submit" class="style__button">Giriş</button>
-
-       
+            <button type="submit" class="style__button">Giriş</button>      
         </form>
     </div>
-
 </body>
 </html>

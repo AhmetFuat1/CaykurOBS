@@ -68,10 +68,19 @@
 
     <div class="custom-table-container" style="margin: 0; flex: 1.5;">
     <h1 class="style__title">Ders Kaydı</h1>
-    <table class="custom-table">
+    <div class="arama-kapsayici">
+            <button type="button" id="temizle-btn" class="arama-temizle-btn" style="display:none;">&#10005;</button>
+            <div class="arama-input-kutu">
+                <input type="text" class="arama-input" id="arama-input" placeholder="Ara...🔎">
+            </div>
+            <button type="button" class="arama-btn" onclick="aramaYap()">Ara</button>
+    </div>
+    <table class="custom-table" id="tablo">
         <thead>
             <tr>
-                <th>Öğrenci Adı Soyadı</th>
+                    <th onclick="sirala(0)" style="cursor: pointer; user-select: none;">
+                        Öğrenci Adı Soyadı <span class="sirala-ikon"> ↕️</span>
+                    </th>
                 <th>İşlemler</th>
             </tr>
         </thead>
@@ -95,5 +104,7 @@
 </div>
 
 </div>
+<script src="~/js/SiralamaScripti.js"></script>
+<script src="~/js/AramaScripti.js"></script>
 
 

@@ -14,7 +14,7 @@ namespace ÇaykurOBS.Models
         {
             SqlConnection baglanti = BaglantiAcma();
 
-            string sorgu = "SELECT OgrenciID FROM Ogrenciler WHERE Numara = @pNumara AND Sifre = @pSifre AND Durum = 'Aktif Öğrenci'";
+            string sorgu = "SELECT OgrenciID FROM Ogrenciler WHERE Numara = @pNumara AND Sifre = @pSifre AND Durum =1 ";
             SqlCommand komut = new SqlCommand(sorgu, baglanti);
             komut.Parameters.AddWithValue("@pNumara", OgrenciNumarasi);
             komut.Parameters.AddWithValue("@pSifre", Sifre);
@@ -89,23 +89,32 @@ namespace ÇaykurOBS.Models
         {
             List<DersSecimleri> liste = new List<DersSecimleri>();
             SqlConnection baglanti = BaglantiAcma();
-            string sorgu = "SELECT DersSecimleri.DersID, DersSecimleri.Durum, Dersler.DersAdi,Dersler.Kredisi,Dersler.DersKodu FROM DersSecimleri " +
+            string sorgu = "SELECT DersSecimleri.DersID, DersSecimleri.Durum, Dersler.DersAdi,Dersler.Kredisi,Dersler.DersKodu, Ogretmenler.OgretmenAdi, Ogretmenler.OgretmenSoyadi FROM DersSecimleri " +
                            "JOIN Dersler ON DersSecimleri.DersID = Dersler.DersID " +
-                           "WHERE OgrenciID=@OgrenciID ";
+                           "JOIN Ogretmenler ON Dersler.OgretmenID = Ogretmenler.OgretmenID " +
+                           "WHERE OgrenciID=@OgrenciID AND Ogretmenler.Durum = 1";
                             
             SqlCommand komut = new SqlCommand(sorgu, baglanti);
             komut.Parameters.AddWithValue("@OgrenciID", OgrenciID);
-            SqlDataReader veriler = komut.ExecuteReader();
+            SqlDataReader veriler = komut.ExecuteReader(); 
 
             while (veriler.Read())
             {
+                bool durum = Convert.ToBoolean(veriler["Durum"]);
                 DersSecimleri ogr = new DersSecimleri();
                 ogr.DersID = Convert.ToInt32(veriler["DersID"]);
                 ogr.DersKredisi = Convert.ToInt32(veriler["Kredisi"]);
                 ogr.DersAdi = veriler["DersAdi"].ToString();
                 ogr.DersKodu = veriler["DersKodu"].ToString();
-                ogr.Durum = veriler["Durum"].ToString();
-
+                ogr.OgrenciAdiSoyadi = veriler["OgretmenAdi"].ToString() + " " + veriler["OgretmenSoyadi"].ToString();
+                if (durum)
+                {
+                    ogr.Durum = "Onaylandı";
+                }
+                else
+                {
+                    ogr.Durum = "Onay Bekleniyor";
+                }
                 liste.Add(ogr);
             }
             baglanti.Close();
@@ -120,7 +129,7 @@ namespace ÇaykurOBS.Models
                            "Dersler.DersAdi,Dersler.Kredisi,Dersler.DersKodu, Ogretmenler.OgretmenAdi, Ogretmenler.OgretmenSoyadi FROM Notlar " +
                            "JOIN Dersler ON Notlar.DersID=Dersler.DersID " +
                            "JOIN Ogretmenler ON Dersler.OgretmenID=Ogretmenler.OgretmenID " +
-                           "WHERE Notlar.OgrenciID=@OgrenciID";
+                           "WHERE Notlar.OgrenciID=@OgrenciID ";
             SqlCommand komut = new SqlCommand(sorgu, baglanti);
             komut.Parameters.AddWithValue("@OgrenciID", OgrenciID);
             SqlDataReader veriler = komut.ExecuteReader();
@@ -148,8 +157,8 @@ namespace ÇaykurOBS.Models
         {
             List<Ders> liste = new List<Ders>();
             SqlConnection baglanti = BaglantiAcma();
-            string sorgu = "SELECT Dersler.OgretmenID, Dersler.DersID, Dersler.DersAdi, Dersler.Kredisi, Dersler.DersKodu, Ogretmenler.OgretmenAdi, Ogretmenler.OgretmenSoyadi FROM Dersler "+
-                            "JOIN Ogretmenler ON Dersler.OgretmenID=Ogretmenler.OgretmenID";
+            string sorgu = "SELECT Dersler.OgretmenID, Dersler.DersID, Dersler.DersAdi, Dersler.Kredisi, Dersler.DersKodu, Ogretmenler.OgretmenAdi, Ogretmenler.OgretmenSoyadi FROM Dersler " +
+                            "JOIN Ogretmenler ON Dersler.OgretmenID=Ogretmenler.OgretmenID AND Ogretmenler.Durum= 1";
             SqlCommand komut = new SqlCommand(sorgu, baglanti);
             SqlDataReader veriler = komut.ExecuteReader();
 

@@ -70,7 +70,7 @@ namespace ÇaykurOBS.Models
             SqlConnection baglanti = BaglantiAcma();
             string sorgu = "SELECT DersSecimleri.DersID, DersSecimleri.OgrenciID, Ogrenciler.Ad, Ogrenciler.Soyad FROM DersSecimleri " +
                             "JOIN Ogrenciler ON DersSecimleri.OgrenciID=Ogrenciler.OgrenciID " +
-                            "WHERE DersSecimleri.DersID = @pDersID AND DersSecimleri.Durum = 'Onaylandı' AND Ogrenciler.Durum = 'Aktif Öğrenci'";
+                            "WHERE DersSecimleri.DersID = @pDersID AND DersSecimleri.Durum = 1 AND Ogrenciler.Durum = 1";
             SqlCommand komut = new SqlCommand(sorgu, baglanti);
             komut.Parameters.AddWithValue("@pDersID", DersID);
             SqlDataReader veriler = komut.ExecuteReader();
@@ -186,7 +186,7 @@ namespace ÇaykurOBS.Models
             SqlConnection baglanti = BaglantiAcma();
             string sorgu = "SELECT Dersler.DersID, Dersler.DersAdi, Dersler.Kredisi, Dersler.DersKodu , Ogretmenler.OgretmenAdi, Ogretmenler.OgretmenSoyadi FROM Dersler " +
                             "JOIN Ogretmenler ON Dersler.OgretmenID=Ogretmenler.OgretmenID " +
-                            "WHERE Ogretmenler.Durum='Aktif Akademisyen'";
+                            "WHERE Ogretmenler.Durum= 1";
             SqlCommand komut = new SqlCommand(sorgu, baglanti);
             SqlDataReader veriler = komut.ExecuteReader();
 
@@ -213,13 +213,21 @@ namespace ÇaykurOBS.Models
 
             while (veriler.Read())
             {
+                bool durum = Convert.ToBoolean(veriler["Durum"]);
                 Ogrenci ogr = new Ogrenci();
                 ogr.Isim = veriler["Ad"].ToString();
                 ogr.Soyisim = veriler["Soyad"].ToString();
                 ogr.OgrenciNumarasi = veriler["Numara"].ToString();
                 ogr.Email = veriler["Eposta"].ToString();
                 ogr.OgrenciID = Convert.ToInt32(veriler["OgrenciID"]);
-                ogr.Durum = veriler["Durum"].ToString();
+                if (durum)
+                {
+                    ogr.Durum = "Aktif Öğrenci";
+                }
+                else
+                {
+                    ogr.Durum = "Pasif Öğrenci";
+                }
                 liste.Add(ogr);
             }
             baglanti.Close();
@@ -229,7 +237,7 @@ namespace ÇaykurOBS.Models
         {
             List<Akademisyen> liste = new List<Akademisyen>();
             SqlConnection baglanti = BaglantiAcma();
-            string sorgu = "SELECT OgretmenID, OgretmenAdi, OgretmenSoyadi, OgretmenEpostasi, OgretmenNumarasi, Durum FROM Ogretmenler WHERE Durum='Aktif Akademisyen'";
+            string sorgu = "SELECT OgretmenID, OgretmenAdi, OgretmenSoyadi, OgretmenEpostasi, OgretmenNumarasi, Durum FROM Ogretmenler WHERE Durum= 1";
             SqlCommand komut = new SqlCommand(sorgu, baglanti);
             SqlDataReader veriler = komut.ExecuteReader();
             while (veriler.Read())
@@ -239,7 +247,7 @@ namespace ÇaykurOBS.Models
                 akdmsyn.AkademisyenSoyisim = veriler["OgretmenSoyadi"].ToString();
                 akdmsyn.AkademisyenNumarasi = veriler["OgretmenNumarasi"].ToString();
                 akdmsyn.AkademisyenEmail = veriler["OgretmenEpostasi"].ToString();
-                akdmsyn.AkademisyenDurum = veriler["Durum"].ToString();
+                akdmsyn.AkademisyenDurum = "Aktif Akademisyen";
                 akdmsyn.AkademisyenID = Convert.ToInt32(veriler["OgretmenID"]);
                 liste.Add(akdmsyn);
             }
@@ -255,12 +263,20 @@ namespace ÇaykurOBS.Models
             SqlDataReader veriler = komut.ExecuteReader();
             while (veriler.Read())
             {
+                bool durum = Convert.ToBoolean(veriler["Durum"]);
                 Akademisyen akdmsyn = new Akademisyen();
                 akdmsyn.AkademisyenIsim = veriler["OgretmenAdi"].ToString();
                 akdmsyn.AkademisyenSoyisim = veriler["OgretmenSoyadi"].ToString();
                 akdmsyn.AkademisyenNumarasi = veriler["OgretmenNumarasi"].ToString();
                 akdmsyn.AkademisyenEmail = veriler["OgretmenEpostasi"].ToString();
-                akdmsyn.AkademisyenDurum = veriler["Durum"].ToString();
+                if (durum)
+                {
+                    akdmsyn.AkademisyenDurum = "Aktif Akademisyen";
+                }
+                else
+                {
+                    akdmsyn.AkademisyenDurum = "Pasif Akademisyen";
+                }
                 akdmsyn.AkademisyenID = Convert.ToInt32(veriler["OgretmenID"]);
                 liste.Add(akdmsyn);
             }
@@ -279,7 +295,7 @@ namespace ÇaykurOBS.Models
         public static void OgrenciSilme(int OgrenciID)
         {
             SqlConnection baglanti = BaglantiAcma();
-            string sorgu = "UPDATE Ogrenciler SET Durum='Pasif Öğrenci' WHERE OgrenciID=@OgrenciID";
+            string sorgu = "UPDATE Ogrenciler SET Durum=0 WHERE OgrenciID=@OgrenciID";
             SqlCommand komut = new SqlCommand(sorgu, baglanti); 
             komut.Parameters.AddWithValue("@OgrenciID",  OgrenciID);
             komut.ExecuteNonQuery();
@@ -288,7 +304,7 @@ namespace ÇaykurOBS.Models
         public static void AkademisyenSilme(int AkademisyenID)
         {
             SqlConnection baglanti = BaglantiAcma();
-            string sorgu = "UPDATE Ogretmenler SET Durum='Pasif Akademisyen' WHERE OgretmenID=@OgretmenID";
+            string sorgu = "UPDATE Ogretmenler SET Durum=0 WHERE OgretmenID=@OgretmenID";
             SqlCommand komut = new SqlCommand(sorgu, baglanti);
             komut.Parameters.AddWithValue("@OgretmenID", AkademisyenID);
             komut.ExecuteNonQuery();
@@ -297,7 +313,7 @@ namespace ÇaykurOBS.Models
         public static void OgrenciYenidenEkle(int OgrenciID)
         {
             SqlConnection baglanti = BaglantiAcma();
-            string sorgu = "UPDATE Ogrenciler SET Durum='Aktif Öğrenci' WHERE OgrenciID=@OgrenciID";
+            string sorgu = "UPDATE Ogrenciler SET Durum=1 WHERE OgrenciID=@OgrenciID";
             SqlCommand komut = new SqlCommand(sorgu, baglanti);
             komut.Parameters.AddWithValue("@OgrenciID", OgrenciID);
             komut.ExecuteNonQuery();
@@ -306,7 +322,7 @@ namespace ÇaykurOBS.Models
         public static void AkademisyenYenidenEkle(int AkademisyenID)
         {
             SqlConnection baglanti = BaglantiAcma();
-            string sorgu = "UPDATE Ogretmenler SET Durum='Aktif Akademisyen' WHERE OgretmenID=@OgretmenID";
+            string sorgu = "UPDATE Ogretmenler SET Durum=1 WHERE OgretmenID=@OgretmenID";
             SqlCommand komut = new SqlCommand(sorgu, baglanti);
             komut.Parameters.AddWithValue("@OgretmenID", AkademisyenID);
             komut.ExecuteNonQuery();
@@ -331,7 +347,7 @@ namespace ÇaykurOBS.Models
                             "JOIN Dersler ON DersSecimleri.DersID=Dersler.DersID " +
                             "JOIN Ogrenciler ON DersSecimleri.OgrenciID=Ogrenciler.OgrenciID " +
                             "JOIN Ogretmenler ON Dersler.OgretmenID=Ogretmenler.OgretmenID  " +
-                            "WHERE DersSecimleri.Durum = 'Onay Bekleniyor' AND Ogrenciler.Durum = 'Aktif Öğrenci'";
+                            "WHERE DersSecimleri.Durum = 0 AND Ogrenciler.Durum = 1";
             SqlCommand komut = new SqlCommand(sorgu, baglanti);
             SqlDataReader veriler = komut.ExecuteReader();
 
@@ -340,7 +356,7 @@ namespace ÇaykurOBS.Models
                 DersSecimleri drsscm = new DersSecimleri();
                 drsscm.DersAdi = veriler["DersAdi"].ToString();
                 drsscm.DersKodu = veriler["DersKodu"].ToString();
-                drsscm.Durum = veriler["Durum"].ToString();
+                drsscm.Durum = "Onay Bekleniyor";
                 drsscm.OgrenciAdiSoyadi = veriler["Ad"].ToString() + " " + veriler["Soyad"].ToString();
                 drsscm.OgretmenAdiSoyadi = veriler["OgretmenAdi"].ToString() + " " + veriler["OgretmenSoyadi"].ToString();
                 drsscm.DersKredisi = Convert.ToInt32(veriler["Kredisi"]);
@@ -354,7 +370,7 @@ namespace ÇaykurOBS.Models
         public static void DersSecimOnaylama(int DersID, int OgrenciID)
         {
             SqlConnection baglanti = BaglantiAcma();
-            string sorgu = "UPDATE DersSecimleri SET Durum='Onaylandı' WHERE DersID=@DersID AND OgrenciID=@OgrenciID";
+            string sorgu = "UPDATE DersSecimleri SET Durum=1 WHERE DersID=@DersID AND OgrenciID=@OgrenciID";
             SqlCommand komut = new SqlCommand(sorgu, baglanti);
             komut.Parameters.AddWithValue("@DersID", DersID);
             komut.Parameters.AddWithValue("@OgrenciID", OgrenciID);

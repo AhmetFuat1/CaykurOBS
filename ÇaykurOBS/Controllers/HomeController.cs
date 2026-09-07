@@ -117,6 +117,12 @@ namespace ÇaykurOBS.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        public IActionResult DersSecimOnaylama(int DersID, int OgrenciID)
+        {
+            SorguKomutlari.DersSecimOnaylama(DersID, OgrenciID);
+            List<DersSecimleri> onayBekleyenler = SorguKomutlari.DersOnayTablosu();
+            return View("DersOnayTablosu", onayBekleyenler);
+        }
         public IActionResult OnayliDersSilme(int DersID,int OgrenciID)
         {
             SorguKomutlari.DersSecimSilme(DersID, OgrenciID);

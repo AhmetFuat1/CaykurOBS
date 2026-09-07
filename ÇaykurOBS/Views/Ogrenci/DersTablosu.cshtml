@@ -2,8 +2,15 @@
     Layout = "~/Views/Shared/OgrenciLayout.cshtml";
 }
 
-<div class="custom-table-container">
+<div class="custom-table-container" id="tablo">
     <h1 class="style__title">Ders Alma Ekranı</h1>
+    <div class="arama-kapsayici">
+        <button type="button" id="temizle-btn" class="arama-temizle-btn" style="display:none;">&#10005;</button>
+        <div class="arama-input-kutu">
+            <input type="text" class="arama-input" id="arama-input" placeholder="Ara...🔎">
+        </div>
+        <button type="button" class="arama-btn" onclick="aramaYap()">Ara</button>
+    </div>
 
     <p><strong>Seçilen Toplam Kredi:</strong> 
         <span id="krediGosterge">@(ViewBag.MevcutKredi ?? 0)</span>
@@ -15,10 +22,16 @@
             <thead>
                 <tr>
                     <th>Seç</th>
-                    <th>Ders İsmi</th>
-                    <th>Kredisi</th>
+                    <th onclick="sirala(1)" style="cursor: pointer; user-select: none;">
+                        Ders İsmi <span class="sirala-ikon"> ↕️</span>
+                    </th>
+                    <th onclick="sirala(2)" style="cursor: pointer; user-select: none;">
+                        Kredisi <span class="sirala-ikon"> ↕️</span>
+                    </th>
                     <th>Ders Kodu</th>
-                    <th>Dersi Veren Akademisyen</th>
+                    <th onclick="sirala(4)" style="cursor: pointer; user-select: none;">
+                        Dersi Veren Akademisyen<span class="sirala-ikon"> ↕️</span>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -70,3 +83,5 @@
         document.getElementById("krediGosterge").innerText = toplam;
     }
 </script>
+<script src="~/js/SiralamaScripti.js"></script>
+<script src="~/js/AramaScripti.js"></script>

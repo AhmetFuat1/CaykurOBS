@@ -3,10 +3,8 @@
 }
 
     <div class="style">
-
         <form action="/Akademisyen/NotKaydet" class="style__form" method="post">
-        <h1 class="style__title">Not Giriş Ekranı</h1>
-         
+        <h1 class="style__title">Not Giriş Ekranı</h1>      
             @if (ViewBag.HataMesaji != null)
             {
                 <div class="style__viewbag">
@@ -16,9 +14,7 @@
             <div class="style__content">
                 <div class="style__box">
                     <i class="bx bx-lock-alt"></i>
-
                 <input type="hidden" name="DersID" value="@ViewBag.SecilenDersID" />
-
                     <div class="style__box-input">
                         <input type="number" required class="style__input" name="VizeNotu" placeholder=" ">
                         <label class="style__label">Vize Notu</label>
@@ -32,7 +28,6 @@
                         <label class="style__label">Final Notu</label>
                     </div>
                 </div>
-
                 <div class="style__box">
                     <i class="bx bx-lock-alt"></i>
 
@@ -59,9 +54,7 @@
                 </div>
             </div>
             </div>
-
             <button type="submit" class="style__button">Kaydet</button> 
-
         </form>
     </div>
 

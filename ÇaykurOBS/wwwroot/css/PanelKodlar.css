@@ -134,7 +134,7 @@ body {
     font-size: 1.5rem;
     font-weight: 600;
     color: var(--black1);
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     border-bottom: 2px solid #eee;
     padding-bottom: 10px;
 }
@@ -349,6 +349,81 @@ body {
 .btn-onayla:disabled {
         background-color: #6c757d;
         cursor: not-allowed;
+}
+.arama-kapsayici {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+/* Input ve çarpı butonunu bir arada tutan kapsayıcı */
+.arama-input-grup {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+/* Arama inputu */
+.arama-input {
+    width: 240px;
+    height: 38px;
+    padding: 0 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.arama-input:focus {
+        border-color: #ba162a;
+        box-shadow: 0 0 0 3px rgba(186, 22, 42, 0.12);
+}
+/* Çarpı (X) temizleme butonu */
+.arama-temizle-btn {
+    background-color: #f1f1f1;
+    color: #ba162a;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.arama-temizle-btn:hover {
+        background-color: #ba162a;
+        color: #fff;
+        border-color: #ba162a;
+}
+/* Kırmızı Ara butonu */
+.arama-btn {
+    background-color: #ba162a;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    height: 38px;
+    padding: 0px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: background-color 0.2s;
+}
+.arama-btn:hover {
+        background-color: #961222;
+}
+
+.arama-btn:active {
+        transform: scale(0.98);
 }
 
 

@@ -4,14 +4,27 @@
 
 <div class="custom-table-container">
     <h1 class="style__title">Akademisyen Listesi</h1>
-    <table class="custom-table">
+    <div class="arama-kapsayici">
+        <button type="button" id="temizle-btn" class="arama-temizle-btn" style="display:none;">&#10005;</button>
+        <div class="arama-input-kutu">
+            <input type="text" class="arama-input" id="arama-input" placeholder="Ara...🔎">
+        </div>
+        <button type="button" class="arama-btn" onclick="aramaYap()">Ara</button>
+    </div>
+    <table class="custom-table" id = "tablo">
         <thead>
             <tr>
-                <th>Akademisyen İsmi</th>
-                <th>Akademisyen Soyismi</th>
+                <th onclick="sirala(0)" style="cursor: pointer; user-select: none;">
+                    Akademisyen İsmi <span class="sirala-ikon"> ↕️</span>
+                </th>
+                <th onclick="sirala(1)" style="cursor: pointer; user-select: none;">
+                    Akademisyen Soyismi <span class="sirala-ikon"> ↕️</span>
+                </th>
                 <th>Akademisyen Numarası</th>
                 <th>Akademisyen Epostası</th>
-                <th>Durum</th>
+                <th onclick="sirala(4)" style="cursor: pointer; user-select: none;">
+                    Durum <span class="sirala-ikon"> ↕️</span>
+                </th>
                 <th>İşlemler</th>
             </tr>
         </thead>
@@ -46,3 +59,5 @@
     </table>
 
 </div>
+<script src="~/js/SiralamaScripti.js"></script>
+<script src="~/js/AramaScripti.js"></script>

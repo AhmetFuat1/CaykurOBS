@@ -189,16 +189,16 @@ img {
         justify-content: center;
 }
 
-    .style__form {
+.style__form {
         width: 432px;
         padding: 4rem 3rem 3.5rem;
         border-radius: 1.5rem;
 }
 
-    .style__title {
+.style__title {
         font-size: 2rem;
 }
-    .style__viewbag {
+.style__viewbag {
         background-color: rgba(220, 53, 69, 0.2);
         border: 1px solid red;
         color: white;
@@ -208,7 +208,6 @@ img {
         text-align: center;
 }
 }
-
 .custom-select {
     cursor: pointer;
     background-color: transparent;

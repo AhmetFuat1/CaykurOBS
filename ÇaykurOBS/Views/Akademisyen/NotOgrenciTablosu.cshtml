@@ -4,18 +4,31 @@
 
 <div class="custom-table-container">
     <h1 class="style__title">Dersi Alan Öğrenciler ve Notları Listesi</h1>
-    <table class="custom-table">
+    <div class="arama-kapsayici">
+        <button type="button" id="temizle-btn" class="arama-temizle-btn" style="display:none;">&#10005;</button>
+        <div class="arama-input-kutu">
+            <input type="text" class="arama-input" id="arama-input" placeholder="Ara...🔎">
+        </div>
+        <button type="button" class="arama-btn" onclick="aramaYap()">Ara</button>
+    </div>
+    <table class="custom-table" id="tablo">
         <thead>
             <tr>
-                <th>Ders İsmi</th>
-                <th>Kredisi</th>
+                <th> Ders İsmi </th>
+                <th> Kredisi </th>
                 <th>Ders Kodu</th>
-                <th>Dersi Alan Öğrenciler</th>
-                <th>Vize Notu</th>
-                <th>Final Notu</th>
-                <th>Bütünleme Notu</th>
-                <th>Ortalaması</th>
-                <th>Harf Notu</th>
+                <th onclick="sirala(3)" style="cursor: pointer; user-select: none;">
+                    Dersi Alan Öğrenci <span class="sirala-ikon"> ↕️</span>
+                </th>
+                <th>VizeNotu</th>
+                <th>FinalNotu</th>
+                <th>ButunlemeNotu</th>
+                <th onclick="sirala(7)" style="cursor: pointer; user-select: none;">
+                    Ortalaması <span class="sirala-ikon"> ↕️</span>
+                </th>
+                <th onclick="sirala(8)" style="cursor: pointer; user-select: none;">
+                    Harf Notu <span class="sirala-ikon"> ↕️</span>
+                </th>
                 <th>İşlemler</th>
             </tr>
         </thead>
@@ -45,3 +58,5 @@
         </tbody>
     </table>
 </div>
+<script src="~/js/SiralamaScripti.js"></script>
+<script src="~/js/AramaScripti.js"></script>

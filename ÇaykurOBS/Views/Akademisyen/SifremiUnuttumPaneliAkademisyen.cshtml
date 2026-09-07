@@ -15,23 +15,19 @@
 
         <form action="/Akademisyen/SifremiUnuttumPaneliAkademisyen" class="style__form" method="post">
             <h1 class="style__title">Şifre Yenileme Ekranı</h1>
-
             @if (ViewBag.HataMesaji != null)
             {
                 <div class="style__viewbag">
                     @ViewBag.HataMesaji
                 </div>
             }
-
             <div class="style__content">
-
                 <div class="style__box">
                     <div class="style__box-input">
                         <input type="password" required class="style__input" name="AkademisyenSifre" placeholder=" ">
                         <label class="style__label">Şifre</label>
                     </div>
                 </div>
-
                 <div class="style__box">
                     <div class="style__box-input">
                         <input type="password" required class="style__input" name="AkademisyenSifreTekrar" placeholder=" ">
@@ -39,9 +35,7 @@
                     </div>
                 </div>
             </div>
-
             <button type="submit" class="style__button">Şifreyi Sıfırla</button>
-     
         </form>
     </div>
 

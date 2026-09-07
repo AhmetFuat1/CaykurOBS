@@ -3,10 +3,8 @@
 }
 
     <div class="style">
-
         <form action="/Akademisyen/NotDuzenleme" class="style__form" method="post">
-        <h1 class="style__title">Not Düzenleme Ekranı</h1>
-         
+        <h1 class="style__title">Not Düzenleme Ekranı</h1>      
             @if (ViewBag.HataMesaji != null)
             {
                 <div class="style__viewbag">
@@ -16,7 +14,6 @@
             <div class="style__content">
                 <div class="style__box">
                     <i class="bx bx-lock-alt"></i>
-
                 <input type="hidden" name="DersID" value="@Model.DersID" />
                 <input type="hidden" name="OgrenciID" value="@Model.OgrenciID" />
 
@@ -27,25 +24,20 @@
                 </div>
                 <div class="style__box">
                     <i class="bx bx-lock-alt"></i>
-
                     <div class="style__box-input">
                         <input type="number" required class="style__input" name="FinalNotu" value="@Model.FinalNotu" placeholder=" ">
                         <label class="style__label">Final Notu</label>
                     </div>
                 </div>
-
                 <div class="style__box">
                     <i class="bx bx-lock-alt"></i>
-
                     <div class="style__box-input">
                         <input type="number" class="style__input" name="ButunlemeNotu" value="@Model.ButunlemeNotu" placeholder=" ">
                         <label class="style__label">Bütünleme Notu</label>
                     </div>
                 </div>
             </div>
-
             <button type="submit" class="style__button">Notu Düzenle</button> 
-
         </form>
     </div>
 

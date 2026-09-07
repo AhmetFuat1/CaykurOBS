@@ -14,7 +14,7 @@ namespace ÇaykurOBS.Models
         {
             SqlConnection baglanti = BaglantiAcma();
 
-            string sorgu = "SELECT OgretmenID FROM Ogretmenler WHERE OgretmenNumarasi = @pNumara AND OgretmenSifresi = @pSifre AND Durum = 'Aktif Akademisyen'";
+            string sorgu = "SELECT OgretmenID FROM Ogretmenler WHERE OgretmenNumarasi = @pNumara AND OgretmenSifresi = @pSifre AND Durum = 1";
             SqlCommand komut = new SqlCommand(sorgu, baglanti);
             komut.Parameters.AddWithValue("@pNumara", AkademisyenNumarasi);
             komut.Parameters.AddWithValue("@pSifre", Sifre);
@@ -46,7 +46,9 @@ namespace ÇaykurOBS.Models
         public static int NotGirme(NotGirme YeniNot)
         {
             SqlConnection baglanti = BaglantiAcma();
-            string kontrolSorgusu = "SELECT COUNT(*) FROM Notlar WHERE DersID = @pDersID AND OgrenciID = @pOgrenciID";
+            string kontrolSorgusu = "SELECT COUNT(*) FROM Notlar " +
+                                    "JOIN Ogrenciler ON Notlar.OgrenciID = Ogrenciler.OgrenciID " +
+                                    "WHERE Notlar.DersID = @pDersID AND Notlar.OgrenciID = @pOgrenciID AND Ogrenciler.Durum = 1 ";
             SqlCommand kontrol = new SqlCommand(kontrolSorgusu, baglanti);
             kontrol.Parameters.AddWithValue("@pDersID", YeniNot.DersID);
             kontrol.Parameters.AddWithValue("@pOgrenciID", YeniNot.OgrenciID);
@@ -135,7 +137,7 @@ namespace ÇaykurOBS.Models
             string sorgu = "SELECT DersSecimleri.DersID, DersSecimleri.OgrenciID, DersSecimleri.Durum, Ogrenciler.Ad, Ogrenciler.Soyad, Dersler.Dersadi, Dersler.Kredisi, Dersler.DersKodu  FROM DersSecimleri " +
                             "JOIN Dersler ON DersSecimleri.DersID=Dersler.DersID " +
                             "JOIN Ogrenciler ON DersSecimleri.OgrenciID=Ogrenciler.OgrenciID " +
-                            "WHERE DersSecimleri.DersID = @pDersID AND DersSecimleri.Durum = 'Onaylandı' ";
+                            "WHERE DersSecimleri.DersID = @pDersID AND DersSecimleri.Durum = 1 AND Ogrenciler.Durum = 1";
             SqlCommand komut = new SqlCommand(sorgu, baglanti);
             komut.Parameters.AddWithValue("@pDersID", DersID);
             SqlDataReader veriler = komut.ExecuteReader();
@@ -162,7 +164,7 @@ namespace ÇaykurOBS.Models
                             "JOIN Dersler ON DersSecimleri.DersID=Dersler.DersID " +
                             "JOIN Ogrenciler ON DersSecimleri.OgrenciID=Ogrenciler.OgrenciID " +
                             "JOIN Notlar ON DersSecimleri.DersID=Notlar.DersID AND DersSecimleri.OgrenciID=Notlar.OgrenciID  " +
-                            "WHERE DersSecimleri.DersID = @pDersID AND DersSecimleri.Durum = 'Onaylandı' ";
+                            "WHERE DersSecimleri.DersID = @pDersID AND DersSecimleri.Durum = 1 AND Ogrenciler.Durum = 1";
             SqlCommand komut = new SqlCommand(sorgu, baglanti);
             komut.Parameters.AddWithValue("@pDersID", DersID);
             SqlDataReader veriler = komut.ExecuteReader();
