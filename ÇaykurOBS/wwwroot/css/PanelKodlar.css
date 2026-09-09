@@ -426,4 +426,95 @@ body {
         transform: scale(0.98);
 }
 
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+}
+/* 2'li Bilgi Kutuları */
+.dashboard-cift-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.bilgi-kutusu {
+    background: var(--white);
+    padding: 22px 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    border: 1px solid #eaeaea;
+}
+
+.bilgi-baslik {
+    font-size: 1.1rem;
+    color: var(--black1);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 8px;
+}
+
+.bilgi-liste {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: #444;
+}
+
+.bilgi-liste li strong {
+        color: var(--red);
+}
+
+.bilgi-metin {
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 16px;
+}
+
+.kurumsal-link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #f5f5f5;
+    color: var(--black1);
+    padding: 8px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 1px solid #ddd;
+    transition: all 0.2s ease;
+}
+
+.kurumsal-link-btn:hover {
+        background: var(--red);
+        color: var(--white);
+        border-color: var(--red);
+}
+/* En Alttaki Soluk Gri Footer */
+.dashboard-footer {
+    margin-top: 15px;
+    padding: 15px 0;
+    text-align: center;
+    border-top: 1px solid #e5e5e5;
+}
+
+.dashboard-footer p {
+        font-size: 0.8rem;
+        color: #999;
+        letter-spacing: 0.3px;
+}
+
+.dashboard-footer strong {
+        color: #777;
+        font-weight: 600;
+}
 
